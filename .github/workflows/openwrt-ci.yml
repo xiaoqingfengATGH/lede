@@ -57,7 +57,7 @@ jobs:
       - name: Update feeds
         run: |
           sed -i 's/\"#src-git\"/\"src-git\"/g' ./feeds.conf.default
-          cd package && git clone https://github.com/jefferymvp/luci-app-koolproxyR &&　cd ..
+          sh koolproxyrsh
           cat >> .config <<EOF
           CONFIG_PACKAGE_luci-app-koolproxyR=y          
           EOF
