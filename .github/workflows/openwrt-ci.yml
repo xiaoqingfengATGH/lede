@@ -15,6 +15,12 @@ on:
   push:
     tags:
       - '*'
+env:
+  FREE_UP_DISK: false
+  SSH_ACTIONS: true
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+  TZ: Asia/Shanghai        
 
 jobs:
 
@@ -51,6 +57,10 @@ jobs:
 
       - name: Generate configuration file
         run: make defconfig
+        
+      - name: SSH connection to Actions
+        uses: P3TERX/debugger-action@master
+        if: env.SSH_ACTIONS == 'true'         
 
       - name: Make download
         run: |
