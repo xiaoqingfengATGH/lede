@@ -1,3 +1,13 @@
 #!bin/sh
 cd package
 git clone https://github.com/jefferymvp/luci-app-koolproxyR
+~/work/HomeLede
+git clone https://github.com/rufengsuixing/luci-app-adguardhome.git
+git clone https://github.com/destan19/OpenAppFilter
+git clone https://github.com/Lienol/openwrt-package
+mv HomeLede/feeds/xiaoqingfeng/luci-app-adguardhome ~/work/
+mv HomeLede/feeds/lienol/lienol/luci-app-passwall ~/work/
+mv OpenAppFilter HomeLede/package/
+mv openwrt-package/lienol/luci-app-passwall HomeLede/feeds/lienol/lienol/
+mv luci-app-adguardhome HomeLede/feeds/xiaoqingfeng
+cd ~/work/HomeLede/HomeLede
