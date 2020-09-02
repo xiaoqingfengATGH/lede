@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 # 
 
-name: OpenWrt-k2p16-128
+name: x86_64-koolproxy-pass-smartdns
 
 on:
   push:
