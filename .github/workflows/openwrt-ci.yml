@@ -1,15 +1,20 @@
+#
+# This is free software, lisence use MIT.
+# 
+# Copyright (C) 2019 P3TERX <https://p3terx.com>
+# Copyright (C) 2020 KFERMercer <KFER.Mercer@gmail.com>
 # 
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
-# Copyright (C) 2019 P3TERX
-#
-# Copyright (C) 2020 KFERMercer
-#
+
 name: OpenWrt-CI
 
 on:
-  schedule:
-    - cron: 0 20 * * *
+  push:
+    branches: 
+      - master
+  # schedule:
+  #   - cron: 0 20 * * *
   release:
     types: [published]
 
@@ -42,21 +47,279 @@ jobs:
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
 
+          # sudo mkdir -p -m 777 /mnt/openwrt/bin /mnt/openwrt/build_dir/host /mnt/openwrt/build_dir/hostpkg /mnt/openwrt/dl /mnt/openwrt/feeds /mnt/openwrt/staging_dir
+          # ln -s /mnt/openwrt/bin ./bin
+          # mkdir -p ./build_dir
+          # ln -s -f /mnt/openwrt/build_dir/host ./build_dir/host
+          # ln -s -f /mnt/openwrt/build_dir/hostpkg ./build_dir/hostpkg
+          # ln -s /mnt/openwrt/dl ./dl
+          # ln -s /mnt/openwrt/feeds ./feeds
+          # ln -s /mnt/openwrt/staging_dir ./staging_dir
+
           df -h
 
       - name: Update feeds
         run: |
-          sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
       - name: Generate configuration file
-        run: make defconfig
+        run: |
+          rm -f ./.config*
+          touch ./.config
+
+          #
+          # 在 cat >> .config <<EOF 到 EOF 之间粘贴你的编译配置, 需注意缩进关系
+          # 例如:
+
+          cat >> .config <<EOF
+          CONFIG_PACKAGE_luci-app-accesscontrol=y
+          # CONFIG_PACKAGE_luci-app-adblock is not set
+          CONFIG_PACKAGE_luci-app-adbyby-plus=m
+          CONFIG_PACKAGE_luci-app-adguardhome=m
+          # CONFIG_PACKAGE_luci-app-advanced-reboot is not set
+          # CONFIG_PACKAGE_luci-app-ahcp is not set
+          CONFIG_PACKAGE_luci-app-airplay2=m
+          CONFIG_PACKAGE_luci-app-aliddns=y
+          # CONFIG_PACKAGE_luci-app-amule is not set
+          CONFIG_PACKAGE_luci-app-aria2=y
+          CONFIG_PACKAGE_luci-app-arpbind=m
+          # CONFIG_PACKAGE_luci-app-asterisk is not set
+          # CONFIG_PACKAGE_luci-app-attendedsysupgrade is not set
+          CONFIG_PACKAGE_luci-app-autoreboot=m
+          CONFIG_PACKAGE_luci-app-baidupcs-web=m
+          # CONFIG_PACKAGE_luci-app-bcp38 is not set
+          # CONFIG_PACKAGE_luci-app-bird1-ipv4 is not set
+          # CONFIG_PACKAGE_luci-app-bird1-ipv6 is not set
+          # CONFIG_PACKAGE_luci-app-bmx6 is not set
+          CONFIG_PACKAGE_luci-app-brook-server=m
+          CONFIG_PACKAGE_luci-app-chinadns-ng=m
+          CONFIG_PACKAGE_luci-app-cifs-mount=y
+          # CONFIG_PACKAGE_luci-app-cifsd is not set
+          # CONFIG_PACKAGE_luci-app-cjdns is not set
+          # CONFIG_PACKAGE_luci-app-clamav is not set
+          # CONFIG_PACKAGE_luci-app-commands is not set
+          CONFIG_PACKAGE_luci-app-control-timewol=y
+          CONFIG_PACKAGE_luci-app-control-webrestriction=y
+          CONFIG_PACKAGE_luci-app-control-weburl=y
+          CONFIG_PACKAGE_luci-app-cshark=m
+          CONFIG_PACKAGE_luci-app-ddns=y
+          CONFIG_PACKAGE_luci-app-diag-core=m
+          CONFIG_PACKAGE_luci-app-diskman=m
+          CONFIG_PACKAGE_luci-app-diskman_INCLUDE_btrfs_progs=y
+          CONFIG_PACKAGE_luci-app-diskman_INCLUDE_lsblk=y
+          CONFIG_PACKAGE_luci-app-diskman_INCLUDE_mdadm=y
+          CONFIG_PACKAGE_luci-app-diskman_INCLUDE_kmod_md_raid456=y
+          CONFIG_PACKAGE_luci-app-diskman_INCLUDE_kmod_md_linear=y
+          CONFIG_PACKAGE_luci-app-dnscrypt-proxy=m
+          CONFIG_PACKAGE_luci-app-dnsforwarder=m
+          # CONFIG_PACKAGE_luci-app-docker is not set
+          CONFIG_PACKAGE_luci-app-dockerman=y
+          # CONFIG_PACKAGE_luci-app-dump1090 is not set
+          # CONFIG_PACKAGE_luci-app-dynapoint is not set
+          # CONFIG_PACKAGE_luci-app-e2guardian is not set
+          # CONFIG_PACKAGE_luci-app-familycloud is not set
+          # CONFIG_PACKAGE_luci-app-fileassistant is not set
+          CONFIG_PACKAGE_luci-app-filebrowser=m
+          CONFIG_PACKAGE_luci-app-filetransfer=y
+          CONFIG_PACKAGE_luci-app-firewall=y
+          CONFIG_PACKAGE_luci-app-flowoffload=m
+          # CONFIG_PACKAGE_luci-app-freifunk-diagnostics is not set
+          # CONFIG_PACKAGE_luci-app-freifunk-policyrouting is not set
+          # CONFIG_PACKAGE_luci-app-freifunk-widgets is not set
+          CONFIG_PACKAGE_luci-app-frpc=m
+          CONFIG_PACKAGE_luci-app-frps=m
+          # CONFIG_PACKAGE_luci-app-fwknopd is not set
+          # CONFIG_PACKAGE_luci-app-guest-wifi is not set
+          CONFIG_PACKAGE_luci-app-haproxy-tcp=m
+          CONFIG_PACKAGE_luci-app-hd-idle=y
+          # CONFIG_PACKAGE_luci-app-hnet is not set
+          CONFIG_PACKAGE_luci-app-homeredirect=y
+          # CONFIG_PACKAGE_luci-app-https-dns-proxy is not set
+          # CONFIG_PACKAGE_luci-app-ipsec-vpnd is not set
+          CONFIG_PACKAGE_luci-app-ipsec-vpnserver-manyusers=y
+          CONFIG_PACKAGE_luci-app-kcptun=y
+          CONFIG_PACKAGE_luci-app-kodexplorer=y
+          # CONFIG_PACKAGE_luci-app-lxc is not set
+          # CONFIG_PACKAGE_luci-app-meshwizard is not set
+          CONFIG_PACKAGE_luci-app-minidlna=m
+          # CONFIG_PACKAGE_luci-app-mjpg-streamer is not set
+          CONFIG_PACKAGE_luci-app-music-remote-center=m
+          CONFIG_PACKAGE_luci-app-mwan3=y
+          CONFIG_PACKAGE_luci-app-mwan3helper=m
+          # CONFIG_PACKAGE_luci-app-n2n_v2 is not set
+          CONFIG_PACKAGE_luci-app-netdata=m
+          CONFIG_PACKAGE_luci-app-nextdns=m
+          CONFIG_PACKAGE_luci-app-nfs=m
+          CONFIG_PACKAGE_luci-app-nft-qos=y
+          CONFIG_PACKAGE_luci-app-nginx-pingos=m
+          CONFIG_PACKAGE_luci-app-nlbwmon=y
+          # CONFIG_PACKAGE_luci-app-noddos is not set
+          CONFIG_PACKAGE_luci-app-nps=m
+          CONFIG_PACKAGE_luci-app-ntpc=m
+          CONFIG_PACKAGE_luci-app-ocserv=m
+          # CONFIG_PACKAGE_luci-app-olsr is not set
+          # CONFIG_PACKAGE_luci-app-olsr-services is not set
+          # CONFIG_PACKAGE_luci-app-olsr-viz is not set
+          CONFIG_PACKAGE_luci-app-openclash=y
+          # CONFIG_PACKAGE_luci-app-openvpn is not set
+          CONFIG_PACKAGE_luci-app-openvpn-server=m
+          # CONFIG_PACKAGE_luci-app-p910nd is not set
+          # CONFIG_PACKAGE_luci-app-pagekitec is not set
+          CONFIG_PACKAGE_luci-app-passwall=m
+
+          #
+          # Configuration
+          #
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_Server=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_Plus=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_GO=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Brook=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_kcptun=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_haproxy=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ChinaDNS_NG=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_https_dns_proxy=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_dns2socks=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_v2ray-plugin=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_simple-obfs=y
+          # end of Configuration
+
+          CONFIG_PACKAGE_luci-app-polipo=m
+          CONFIG_PACKAGE_luci-app-pppoe-relay=m
+          CONFIG_PACKAGE_luci-app-pppoe-server=m
+          CONFIG_PACKAGE_luci-app-pptp-vpnserver-manyusers=m
+          CONFIG_PACKAGE_luci-app-privoxy=m
+          CONFIG_PACKAGE_luci-app-ps3netsrv=m
+          CONFIG_PACKAGE_luci-app-qbittorrent=m
+          # CONFIG_PACKAGE_luci-app-qos is not set
+          # CONFIG_PACKAGE_luci-app-radicale is not set
+          CONFIG_PACKAGE_luci-app-ramfree=y
+          CONFIG_PACKAGE_luci-app-rclone=m
+          CONFIG_PACKAGE_luci-app-rclone_INCLUDE_rclone-webui=y
+          CONFIG_PACKAGE_luci-app-rclone_INCLUDE_rclone-ng=y
+          CONFIG_PACKAGE_luci-app-rclone_INCLUDE_fuse-utils=y
+          # CONFIG_PACKAGE_luci-app-rp-pppoe-server is not set
+          CONFIG_PACKAGE_luci-app-samba=y
+          # CONFIG_PACKAGE_luci-app-samba4 is not set
+          CONFIG_PACKAGE_luci-app-serverchan=m
+          CONFIG_PACKAGE_luci-app-sfe=y
+          # CONFIG_PACKAGE_luci-app-shadowsocks-libev is not set
+          # CONFIG_PACKAGE_luci-app-shairplay is not set
+          # CONFIG_PACKAGE_luci-app-siitwizard is not set
+          # CONFIG_PACKAGE_luci-app-simple-adblock is not set
+          CONFIG_PACKAGE_luci-app-smartdns=y
+          CONFIG_PACKAGE_luci-app-softethervpn=m
+          # CONFIG_PACKAGE_luci-app-splash is not set
+          CONFIG_PACKAGE_luci-app-sqm=y
+          # CONFIG_PACKAGE_luci-app-squid is not set
+          # CONFIG_PACKAGE_luci-app-ssr-libev-server is not set
+          # CONFIG_PACKAGE_luci-app-ssr-mudb-server is not set
+          CONFIG_PACKAGE_luci-app-ssr-plus=y
+          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray_plugin=y
+          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray=y
+          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y
+          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Redsocks2=y
+          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun=y
+          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Server=y
+          # CONFIG_PACKAGE_luci-app-ssrserver-python is not set
+          CONFIG_PACKAGE_luci-app-statistics=y
+          CONFIG_PACKAGE_luci-app-strongswanInDocker=y
+          CONFIG_PACKAGE_luci-app-syncdial=y
+          CONFIG_PACKAGE_luci-app-syncthing=m
+          # CONFIG_PACKAGE_luci-app-timecontrol is not set
+          CONFIG_PACKAGE_luci-app-tinyproxy=m
+          CONFIG_PACKAGE_luci-app-transmission=m
+          # CONFIG_PACKAGE_luci-app-travelmate is not set
+          CONFIG_PACKAGE_luci-app-trojan-server=m
+          CONFIG_PACKAGE_luci-app-ttyd=y
+          CONFIG_PACKAGE_luci-app-udpxy=m
+          CONFIG_PACKAGE_luci-app-uhttpd=m
+          CONFIG_PACKAGE_luci-app-unblockmusic=y
+          CONFIG_UnblockNeteaseMusic_Go=y
+          CONFIG_UnblockNeteaseMusic_NodeJS=y
+          CONFIG_PACKAGE_luci-app-unbound=m
+          CONFIG_PACKAGE_luci-app-upnp=y
+          CONFIG_PACKAGE_luci-app-usb-printer=m
+          CONFIG_PACKAGE_luci-app-v2ray-server=m
+          CONFIG_PACKAGE_luci-app-verysync=m
+          CONFIG_PACKAGE_luci-app-vlmcsd=y
+          # CONFIG_PACKAGE_luci-app-vnstat is not set
+          CONFIG_PACKAGE_luci-app-vpnbypass=m
+          CONFIG_PACKAGE_luci-app-vsftpd=y
+          CONFIG_PACKAGE_luci-app-watchcat=y
+          CONFIG_PACKAGE_luci-app-webadmin=m
+          CONFIG_PACKAGE_luci-app-wifischedule=m
+          CONFIG_PACKAGE_luci-app-wireguard=y
+          CONFIG_PACKAGE_luci-app-wol=y
+          CONFIG_PACKAGE_luci-app-wrtbwmon=y
+          CONFIG_PACKAGE_luci-app-xlnetacc=m
+          CONFIG_PACKAGE_luci-app-zerotier=y
+          # end of 3. Applications
+
+          #
+          # 4. Themes
+          #
+          # CONFIG_PACKAGE_luci-theme-argon is not set
+          CONFIG_PACKAGE_luci-theme-argon-dark-mod=y
+          # CONFIG_PACKAGE_luci-theme-argon-light-mod is not set
+          CONFIG_PACKAGE_luci-theme-bootstrap=y
+          # CONFIG_PACKAGE_luci-theme-bootstrap-mod is not set
+          CONFIG_PACKAGE_luci-theme-edge=y
+          # CONFIG_PACKAGE_luci-theme-freifunk-generic is not set
+          CONFIG_PACKAGE_luci-theme-infinityfreedom=y
+          # CONFIG_PACKAGE_luci-theme-material is not set
+          CONFIG_PACKAGE_luci-theme-netgear=y
+          CONFIG_PACKAGE_luci-theme-opentomato=y
+          CONFIG_PACKAGE_luci-theme-opentomcat=y
+          # end of 4. Themes
+
+          #
+          # 5. Protocols
+          #
+          # CONFIG_PACKAGE_luci-proto-3g is not set
+          CONFIG_PACKAGE_luci-proto-bonding=y
+          # CONFIG_PACKAGE_luci-proto-ipip is not set
+          CONFIG_PACKAGE_luci-proto-ipv6=y
+          # CONFIG_PACKAGE_luci-proto-openconnect is not set
+          CONFIG_PACKAGE_luci-proto-ppp=y
+          # CONFIG_PACKAGE_luci-proto-qmi is not set
+          # CONFIG_PACKAGE_luci-proto-relay is not set
+          # CONFIG_PACKAGE_luci-proto-vpnc is not set
+          CONFIG_PACKAGE_luci-proto-wireguard=y
+          # end of 5. Protocols
+
+          #
+          # 6. Libraries
+          #
+          CONFIG_PACKAGE_luci-lib-docker=y
+          # CONFIG_PACKAGE_luci-lib-dracula is not set
+          # CONFIG_PACKAGE_luci-lib-httpclient is not set
+          CONFIG_PACKAGE_luci-lib-httpprotoutils=m
+          CONFIG_PACKAGE_luci-lib-ip=y
+          # CONFIG_PACKAGE_luci-lib-iptparser is not set
+          # CONFIG_PACKAGE_luci-lib-jquery-1-4 is not set
+          CONFIG_PACKAGE_luci-lib-json=y
+          CONFIG_PACKAGE_luci-lib-jsonc=y
+          # CONFIG_PACKAGE_luci-lib-luaneightbl is not set
+          CONFIG_PACKAGE_luci-lib-nixio=y
+          # CONFIG_PACKAGE_luci-lib-px5g is not set
+          EOF
+
+          #
+          # ===============================================================
+          # 
+
+          sed -i 's/^[ \t]*//g' ./.config
+          make defconfig
 
       - name: Make download
         run: |
-          make download -j8
-          find dl -size -1024c -exec rm -f {} \;
+          make download -j8 || make download -j1 V=s
+          rm -rf $(find ./dl/ -size -1024c)
+          df -h
 
       - name: Compile firmware
         run: |
@@ -66,9 +329,8 @@ jobs:
           echo "======================="
           df -h
           echo "======================="
-          du -h --max-depth=1 ./ --exclude=build_dir --exclude=bin
-          du -h --max-depth=1 ./build_dir
-          du -h --max-depth=1 ./bin
+          du -h ./ --max-depth=1
+          du -h /mnt/openwrt/ --max-depth=1 || true
 
       - name: Prepare artifact
         run: |
@@ -97,7 +359,6 @@ jobs:
         with:
           name: OpenWrt_firmware
           path: ./bin/targets/
-  
 
       - name: Upload release asset
         if: github.event == 'release'
