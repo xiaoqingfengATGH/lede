@@ -1,5 +1,3 @@
-#!/bin/ash
-
 . /lib/functions.sh
 . /usr/share/libubox/jshn.sh
 
@@ -41,7 +39,13 @@ ucidef_set_interface() {
 
 		[ -n "$opt" -a -n "$val" ] || break
 
-		json_add_string "$opt" "$val"
+		[ "$opt" = "ifname" -a "$val" != "${val/ //}" ] && {
+			json_select_array "ports"
+			for e in $val; do json_add_string "" "$e"; done
+			json_close_array
+		} || {
+			json_add_string "$opt" "$val"
+		}
 	done
 
 	if ! json_is_a protocol string; then

@@ -7,7 +7,8 @@ SUBTARGETS:=ox810se ox820
 FEATURES:=gpio ramdisk rtc squashfs
 DEVICE_TYPE:=nas
 
-MAINTAINER:=Daniel Golle <daniel@makrotopia.org>
+KERNEL_PATCHVER:=5.4
+KERNEL_TESTING_PATCHVER:=5.10
 
 KERNEL_PATCHVER:=4.14
 KERNEL_TESTING_PATCHVER:=5.4
@@ -16,7 +17,7 @@ include $(INCLUDE_DIR)/target.mk
 
 DEFAULT_PACKAGES += \
 	kmod-button-hotplug kmod-input-gpio-keys-polled \
-	kmod-ledtrig-timer kmod-leds-gpio uboot-envtools
+	kmod-leds-gpio uboot-envtools
 
 KERNELNAME:=zImage dtbs
 
