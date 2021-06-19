@@ -13,17 +13,17 @@ diff -uprN ppp-origin/pppd/chap-new.c ppp/pppd/chap-new.c
  	p[2] = len >> 8;
  	p[3] = len;
  
-+    if (npppd > 1) {
-+        if (syncppp(npppd) < 0) {
-+            error("syncppp sync fail");
-+            sem_unlink(SEM_COUNT_NAME);
-+            sem_unlink(SEM_BLOCK_NAME);
-+        } else {
-+            info("syncppp sync succeeded");
-+        }   
-+    } else {
-+        info("syncppp not active");
-+    }
++	if (npppd > 1) {
++		if (syncppp(npppd) < 0) {
++			error("syncppp sync fail");
++			sem_unlink(SEM_COUNT_NAME);
++			sem_unlink(SEM_BLOCK_NAME);
++		} else {
++			info("syncppp sync succeeded");
++		}
++	} else {
++		info("syncppp not active");
++	}
 +
  	output(0, response, PPP_HDRLEN + len);
  }
@@ -67,7 +67,7 @@ diff -uprN ppp-origin/pppd/options.c ppp/pppd/options.c
  bool	dryrun;			/* print out option values and exit */
  char	*domain;		/* domain name set by domain option */
  int	child_wait = 5;		/* # seconds to wait for children at exit */
-+int	npppd = 0;      /* synchronize between multiple pppd */
++int	npppd = 0;		/* synchronize between multiple pppd */
  struct userenv *userenv_list;	/* user environment variables */
  int	dfl_route_metric = -1;	/* metric of the default route to set over the PPP link */
  
@@ -88,7 +88,7 @@ diff -uprN ppp-origin/pppd/pppd.h ppp/pppd/pppd.h
  extern bool	dump_options;	/* print out option values */
  extern bool	dryrun;		/* check everything, print options, exit */
  extern int	child_wait;	/* # seconds to wait for children at end */
-+extern int npppd;  /* synchronize between multiple pppd */
++extern int	npppd;		/* synchronize between multiple pppd */
  
  #ifdef MAXOCTETS
  extern unsigned int maxoctets;	     /* Maximum octetes per session (in bytes) */
