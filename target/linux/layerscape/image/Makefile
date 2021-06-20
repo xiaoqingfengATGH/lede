@@ -77,8 +77,4 @@ endef
 
 include $(SUBTARGET).mk
 
-ifeq ($(SUBTARGET),armv7)
-include armv7.mk
-endif
-
 $(eval $(call BuildImage))

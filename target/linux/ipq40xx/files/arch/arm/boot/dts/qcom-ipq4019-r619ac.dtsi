@@ -134,13 +134,57 @@
 			#size-cells = <1>;
 
 			partition@0 {
+				label = "SBL1";
+				reg = <0x0 0x40000>;
+				read-only;
+			};
+
+			partition@40000 {
+				label = "MIBIB";
+				reg = <0x40000 0x20000>;
+				read-only;
+			};
+
+			partition@60000 {
+				label = "QSEE";
+				reg = <0x60000 0x60000>;
+				read-only;
+			};
+
+			partition@c0000 {
+				label = "CDT";
+				reg = <0xc0000 0x10000>;
+				read-only;
+			};
+
+			partition@d0000 {
+				label = "DDRPARAMS";
+				reg = <0xd0000 0x10000>;
+				read-only;
+			};
+
+			partition@e0000 {
+				label = "APPSBLENV";
+				reg = <0xe0000 0x10000>;
+				read-only;
+			};
+
+			partition@f0000 {
+				label = "APPSBL";
+				reg = <0xf0000 0x80000>;
+				read-only;
+			};
+
+			partition@1 {
 				label = "Bootloader";
 				reg = <0x0 0x170000>;
+				read-only;
 			};
 
 			partition@170000 {
 				label = "ART";
 				reg = <0x170000 0x10000>;
+				read-only;
 			};
 
 			partition@180000 {
@@ -170,9 +214,9 @@
 			#address-cells = <1>;
 			#size-cells = <1>;
 
-			partition@0 {
+			rootfs_part1: partition@0 {
 				label = "rootfs";
-				reg = <0x0 0x8000000>;
+				reg = <0x0 0x4000000>;
 			};
 
 			rootfs_part2: partition@4000000 {

@@ -63,17 +63,15 @@
   *
   * SPDX-License-Identifier: (GPL-2.0 OR MIT)
   */
-@@ -14,8 +13,8 @@
+@@ -14,7 +13,7 @@
  #include "mt6380.dtsi"
  
  / {
 -	model = "MediaTek MT7622 RFB1 board";
--	compatible = "mediatek,mt7622-rfb1", "mediatek,mt7622";
 +	model = "MT7622_MT7531 RFB";
-+	compatible = "bananapi,bpi-r64", "mediatek,mt7622";
+ 	compatible = "mediatek,mt7622-rfb1", "mediatek,mt7622";
  
  	aliases {
- 		serial0 = &uart0;
 @@ -23,7 +22,7 @@
  
  	chosen {
@@ -93,23 +91,16 @@
  			label = "factory";
  			linux,code = <BTN_0>;
 -			gpios = <&pio 0 0>;
-+			gpios = <&pio 0 GPIO_ACTIVE_HIGH>;
++			gpios = <&pio 0 GPIO_ACTIVE_LOW>;
  		};
  
  		wps {
  			label = "wps";
  			linux,code = <KEY_WPS_BUTTON>;
 -			gpios = <&pio 102 0>;
-+			gpios = <&pio 102 GPIO_ACTIVE_HIGH>;
++			gpios = <&pio 102 GPIO_ACTIVE_LOW>;
 +		};
 +	};
-+
-+	gsw: gsw@0 {
-+                compatible = "mediatek,mt753x";
-+                mediatek,ethsys = <&ethsys>;
-+                #address-cells = <1>;
-+                #size-cells = <0>;
-+        };
 +
 +	leds {
 +		compatible = "gpio-leds";
@@ -167,43 +158,23 @@
 +	mdio: mdio-bus {
  		#address-cells = <1>;
  		#size-cells = <0>;
--
+ 
 -		phy5: ethernet-phy@5 {
 -			reg = <5>;
 -			phy-mode = "sgmii";
--		};
- 	};
- };
- 
-+&gsw {
-+        mediatek,mdio = <&mdio>;
-+        mediatek,portmap = "llllw";
-+        mediatek,mdio_master_pinmux = <0>;
-+        reset-gpios = <&pio 54 0>;
-+        interrupt-parent = <&pio>;
-+        interrupts = <53 IRQ_TYPE_LEVEL_HIGH>;
-+        status = "okay";
++		switch@0 {
++			compatible = "mediatek,mt7531";
++			reg = <0>;
++			reset-gpios = <&pio 54 0>;
 +
-+        port5: port@5 {
-+                compatible = "mediatek,mt753x-port";
-+                reg = <5>;
-+                phy-mode = "rgmii";
-+                fixed-link {
-+                        speed = <1000>;
-+                        full-duplex;
-+                };
-+        };
++			ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
 +
-+        port6: port@6 {
-+                compatible = "mediatek,mt753x-port";
-+                reg = <6>;
-+                phy-mode = "sgmii";
-+                fixed-link {
-+                        speed = <2500>;
-+                        full-duplex;
-+                };
-+        };
-+};    
++				port@0 {
++					reg = <0>;
++					label = "lan1";
++				};
 +
 +				port@1 {
 +					reg = <1>;
