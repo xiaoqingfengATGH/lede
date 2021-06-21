@@ -19,7 +19,8 @@ disablePkgsList="
 ./feeds/packages/utils/docker-compose 
 ./feeds/packages/net/miniupnpd 
 ./feeds/packages/net/mwan3 
-./feeds/packages/utils/docker-ce 
+./feeds/packages/utils/dockerd 
+./feeds/packages/utils/docker 
 ./feeds/packages/utils/containerd 
 ./feeds/packages/utils/libnetwork 
 ./feeds/packages/utils/tini 
