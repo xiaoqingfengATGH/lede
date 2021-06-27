@@ -26,6 +26,7 @@ disablePkgsList="
 ./feeds/packages/utils/libnetwork 
 ./feeds/packages/utils/tini 
 ./feeds/packages/utils/runc 
+./feeds/packages/net/adguardhome 
 ./feeds/packages/net/dnscrypt-proxy2 
 ./feeds/packages/net/https-dns-proxy 
 ./feeds/packages/net/kcptun 
