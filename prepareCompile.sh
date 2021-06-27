@@ -16,6 +16,7 @@ disablePkgsList="
 ./package/lean/luci-app-docker 
 ./package/lean/softethervpn5 
 ./package/lean/luci-app-softethervpn 
+./package/lean/luci-app-netdata 
 ./feeds/packages/utils/docker-compose 
 ./feeds/packages/net/miniupnpd 
 ./feeds/packages/net/mwan3 
