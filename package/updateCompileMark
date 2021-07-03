@@ -12,7 +12,7 @@ COMPILE_MARK=v$COMPILE_DATE
 echo $COMPILE_MARK > $DIR/base-files/files/etc/buildmark
 echo Compile mark set to $COMPILE_MARK
 
-LV=$(cat $DIR/lean/default-settings/files/zzz-default-settings | grep "'R[0-9]\{1,\}.[0-9]\{1,\}.[0-9]\{1,\}'" | cut -d "'" -f 2)
+LV=$(cat $DIR/lean/default-settings/files/zzz-default-settings | grep 'DISTRIB_REVISION=' | head -n 1 | cut -d "'" -f 2)
 sed -i "s/^.*%D.*$/ HomeLede $COMPILE_MARK based on %D $LV/g" $DIR/base-files/files/etc/banner
 echo Banner updated to
 cat $DIR/base-files/files/etc/banner
