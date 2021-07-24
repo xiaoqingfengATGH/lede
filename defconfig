@@ -102,6 +102,7 @@ CONFIG_DEFAULT_kmod-e1000=y
 CONFIG_DEFAULT_kmod-e1000e=y
 CONFIG_DEFAULT_kmod-forcedeth=y
 CONFIG_DEFAULT_kmod-fs-f2fs=y
+CONFIG_DEFAULT_kmod-fs-vfat=y
 CONFIG_DEFAULT_kmod-i40e=y
 CONFIG_DEFAULT_kmod-i40evf=y
 CONFIG_DEFAULT_kmod-igb=y
@@ -1885,6 +1886,7 @@ CONFIG_PACKAGE_ath10k-firmware-qca9984=y
 # CONFIG_PACKAGE_ath11k-firmware-ipq6018 is not set
 # CONFIG_PACKAGE_ath11k-firmware-ipq8074 is not set
 # CONFIG_PACKAGE_ath11k-firmware-qca6390 is not set
+# CONFIG_PACKAGE_ath11k-firmware-qcn9074 is not set
 # CONFIG_PACKAGE_ath6k-firmware is not set
 CONFIG_PACKAGE_ath9k-htc-firmware=y
 # CONFIG_PACKAGE_b43legacy-firmware is not set
@@ -1958,6 +1960,9 @@ CONFIG_PACKAGE_brcmfmac-firmware-43602a1-pcie=y
 # CONFIG_PACKAGE_p54-spi-firmware is not set
 # CONFIG_PACKAGE_p54-usb-firmware is not set
 # CONFIG_PACKAGE_prism54-firmware is not set
+# CONFIG_PACKAGE_qtn-firmware is not set
+# CONFIG_PACKAGE_qtn-proto is not set
+# CONFIG_PACKAGE_qtn-utils is not set
 # CONFIG_PACKAGE_r8169-firmware is not set
 # CONFIG_PACKAGE_radeon-firmware is not set
 # CONFIG_PACKAGE_rs9113-firmware is not set
@@ -2914,6 +2919,7 @@ CONFIG_PACKAGE_MAC80211_MESH=y
 # CONFIG_PACKAGE_kmod-p54-common is not set
 # CONFIG_PACKAGE_kmod-p54-pci is not set
 # CONFIG_PACKAGE_kmod-p54-usb is not set
+# CONFIG_PACKAGE_kmod-qtn-pcie2 is not set
 # CONFIG_PACKAGE_kmod-rsi91x is not set
 # CONFIG_PACKAGE_kmod-rsi91x-sdio is not set
 # CONFIG_PACKAGE_kmod-rsi91x-usb is not set
@@ -4884,7 +4890,6 @@ CONFIG_PACKAGE_luci-app-diskman_INCLUDE_mdadm=y
 CONFIG_PACKAGE_luci-app-diskman_INCLUDE_kmod_md_raid456=y
 CONFIG_PACKAGE_luci-app-diskman_INCLUDE_kmod_md_linear=y
 CONFIG_PACKAGE_luci-app-dnscrypt-proxy=m
-# CONFIG_PACKAGE_luci-app-dnsfilter is not set
 # CONFIG_PACKAGE_luci-app-dnsforwarder is not set
 CONFIG_PACKAGE_luci-app-dockerman=y
 # CONFIG_PACKAGE_luci-app-dump1090 is not set
@@ -5023,8 +5028,8 @@ CONFIG_PACKAGE_TURBOACC_INCLUDE_BBR_CCA=y
 CONFIG_PACKAGE_luci-app-udpxy=m
 CONFIG_PACKAGE_luci-app-uhttpd=m
 CONFIG_PACKAGE_luci-app-unblockmusic=m
-CONFIG_UnblockNeteaseMusic_Go=y
-# CONFIG_UnblockNeteaseMusic_NodeJS is not set
+CONFIG_PACKAGE_luci-app-unblockmusic_INCLUDE_UnblockNeteaseMusic_Go=y
+# CONFIG_PACKAGE_luci-app-unblockmusic_INCLUDE_UnblockNeteaseMusic_NodeJS is not set
 # CONFIG_PACKAGE_luci-app-unbound is not set
 CONFIG_PACKAGE_luci-app-upnp=y
 CONFIG_PACKAGE_luci-app-usb-printer=m
@@ -5604,6 +5609,9 @@ CONFIG_POSTFIX_PCRE=y
 # end of Streaming
 
 CONFIG_PACKAGE_UnblockNeteaseMusic=m
+CONFIG_PACKAGE_UnblockNeteaseMusic-Go=m
+# CONFIG_UNBLOCKNETEASEMUSIC_GO_COMPRESS_GOPROXY is not set
+CONFIG_UNBLOCKNETEASEMUSIC_GO_COMPRESS_UPX=y
 # CONFIG_PACKAGE_ffmpeg is not set
 # CONFIG_PACKAGE_ffprobe is not set
 # CONFIG_PACKAGE_fswebcam is not set
@@ -6004,13 +6012,6 @@ CONFIG_PACKAGE_wsdd2=y
 # CONFIG_PACKAGE_ntripclient is not set
 # CONFIG_PACKAGE_ntripserver is not set
 # end of NTRIP
-
-#
-# NeteaseMusic
-#
-CONFIG_PACKAGE_UnblockNeteaseMusicGo=m
-CONFIG_UnblockNeteaseMusicGo_INCLUDE_GOPROXY=y
-# end of NeteaseMusic
 
 #
 # OLSR.org network framework
@@ -6664,7 +6665,7 @@ CONFIG_PACKAGE_cifsmount=y
 # CONFIG_PACKAGE_dmapd is not set
 CONFIG_PACKAGE_dnscrypt-proxy2=y
 # CONFIG_PACKAGE_dnsforwarder is not set
-CONFIG_PACKAGE_dnsmasq-china-list=y
+CONFIG_PACKAGE_dnsmasq-china-list=m
 # CONFIG_PACKAGE_dnstap is not set
 # CONFIG_PACKAGE_dnstop is not set
 # CONFIG_PACKAGE_dpdk is not set
@@ -6736,6 +6737,7 @@ CONFIG_PACKAGE_libipset=y
 # CONFIG_PACKAGE_map is not set
 # CONFIG_PACKAGE_mbusd is not set
 # CONFIG_PACKAGE_memcached is not set
+# CONFIG_PACKAGE_mentohust is not set
 # CONFIG_PACKAGE_mii-tool is not set
 # CONFIG_PACKAGE_mikrotik-btest is not set
 # CONFIG_PACKAGE_mini_snmpd is not set
@@ -6748,6 +6750,7 @@ CONFIG_PACKAGE_libipset=y
 # CONFIG_PACKAGE_mosquitto-ssl is not set
 # CONFIG_PACKAGE_mrd6 is not set
 # CONFIG_PACKAGE_mstpd is not set
+# CONFIG_PACKAGE_mtk_apcli is not set
 # CONFIG_PACKAGE_mtr is not set
 # CONFIG_PACKAGE_nbd is not set
 # CONFIG_PACKAGE_nbd-server is not set
@@ -7769,7 +7772,6 @@ CONFIG_PACKAGE_p7zip=y
 # CONFIG_PACKAGE_pservice is not set
 # CONFIG_PACKAGE_psmisc is not set
 # CONFIG_PACKAGE_pv is not set
-# CONFIG_PACKAGE_qca-ssdk-shell is not set
 # CONFIG_PACKAGE_qmi-utils is not set
 # CONFIG_PACKAGE_qrencode is not set
 # CONFIG_PACKAGE_quota is not set
@@ -7877,3 +7879,5 @@ CONFIG_PACKAGE_watchcat=y
 # CONFIG_PACKAGE_fontconfig is not set
 # end of Font-Utils
 # end of Xorg
+
+CONFIG_OVERRIDE_PKGS="luci-app-pptp-server"
