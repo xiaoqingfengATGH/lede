@@ -101,18 +101,28 @@ define Device/ZyXELImage
 	IMAGE/sysupgrade.bin/squashfs := append-rootfs | pad-to $$$$(BLOCKSIZE) | sysupgrade-tar rootfs=$$$$@ | append-metadata
 endef
 
-define Device/askey_rt4230w-rev6
+define Device/askey_rt4230w
 	$(call Device/LegacyImage)
 	DEVICE_VENDOR := Askey
 	DEVICE_MODEL := RT4230W
-	DEVICE_VARIANT := REV6
 	SOC := qcom-ipq8065
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
-	DEVICE_PACKAGES := ath10k-firmware-qca9984-ct
 	KERNEL_IN_UBI := 1
+	DEVICE_PACKAGES := ath10k-firmware-qca9984-ct
+endef
+
+define Device/askey_rt4230w-rev6
+	$(call Device/askey_rt4230w)
+	DEVICE_VARIANT := REV6
 endef
 TARGET_DEVICES += askey_rt4230w-rev6
+
+define Device/askey_rt4230w-rev9.3
+	$(call Device/askey_rt4230w)
+	DEVICE_VARIANT := REV9.3
+endef
+TARGET_DEVICES += askey_rt4230w-rev9.3
 
 define Device/asrock_g10
 	$(call Device/FitImage)
@@ -197,8 +207,8 @@ define Device/linksys_e8350-v1
 	BLOCKSIZE := 128k
 	KERNEL_IN_UBI := 1
 	IMAGES = factory.bin sysupgrade.ubi
-	IMAGE/sysupgrade.ubi := append-ubi | check-size 0x04000000 | append-metadata
-	IMAGE/factory.bin := append-ubi | check-size 0x04000000 | linksys-addfwhdr | linksys-bin
+	IMAGE/sysupgrade.ubi := append-ubi | check-size 0x08000000 | append-metadata
+	IMAGE/factory.bin := append-ubi | check-size 0x08000000 | linksys-addfwhdr | linksys-bin
 	DEVICE_PACKAGES := ath10k-firmware-qca988x-ct qtn-utils qtn-firmware qtn-proto kmod-qtn-pcie2
 endef
 TARGET_DEVICES += linksys_e8350-v1
