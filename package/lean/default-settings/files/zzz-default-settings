@@ -15,18 +15,26 @@ rm -f /usr/lib/lua/luci/view/admin_status/index/upnp.htm
 rm -f /usr/lib/lua/luci/view/admin_status/index/ddns.htm
 rm -f /usr/lib/lua/luci/view/admin_status/index/minidlna.htm
 
-sed -i 's/\"services\"/\"nas\"/g' /usr/lib/lua/luci/controller/aria2.lua
-sed -i 's/services/nas/g' /usr/lib/lua/luci/view/aria2/overview_status.htm
-sed -i 's/\"services\"/\"nas\"/g' /usr/lib/lua/luci/controller/hd_idle.lua
-sed -i 's/\"services\"/\"nas\"/g' /usr/lib/lua/luci/controller/samba.lua
-sed -i 's/\"services\"/\"nas\"/g' /usr/lib/lua/luci/controller/samba4.lua
-sed -i 's/\"services\"/\"nas\"/g' /usr/lib/lua/luci/controller/minidlna.lua
-sed -i 's/\"services\"/\"nas\"/g' /usr/lib/lua/luci/controller/transmission.lua
-sed -i 's/\"services\"/\"nas\"/g' /usr/lib/lua/luci/controller/mjpg-streamer.lua
-sed -i 's/\"services\"/\"nas\"/g' /usr/lib/lua/luci/controller/p910nd.lua
-sed -i 's/\"services\"/\"nas\"/g' /usr/lib/lua/luci/controller/usb_printer.lua
-sed -i 's/\"services\"/\"nas\"/g' /usr/lib/lua/luci/controller/xunlei.lua
-sed -i 's/services/nas/g'  /usr/lib/lua/luci/view/minidlna_status.htm
+setNas() (
+	[ -w $1 ] && sed -i 's/\"services\"/\"nas\"/g' $1
+)
+
+setNasNoDoubleQuotationMark() (
+	[ -w $1 ] && sed -i 's/services/nas/g' $1
+)
+
+setNas /usr/lib/lua/luci/controller/aria2.lua
+setNas /usr/lib/lua/luci/view/aria2/overview_status.htm
+setNas /usr/lib/lua/luci/controller/hd_idle.lua
+setNas /usr/lib/lua/luci/controller/samba.lua
+setNas /usr/lib/lua/luci/controller/samba4.lua
+setNas /usr/lib/lua/luci/controller/minidlna.lua
+setNas /usr/lib/lua/luci/controller/transmission.lua
+setNas /usr/lib/lua/luci/controller/mjpg-streamer.lua
+setNas /usr/lib/lua/luci/controller/p910nd.lua
+setNas /usr/lib/lua/luci/controller/usb_printer.lua
+setNas /usr/lib/lua/luci/controller/xunlei.lua
+setNasNoDoubleQuotationMark /usr/lib/lua/luci/view/minidlna_status.htm
 
 ln -sf /sbin/ip /usr/bin/ip
 
@@ -42,7 +50,7 @@ echo '#iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53
 echo '#[ -n "$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
 echo '#[ -n "$(command -v ip6tables)" ] && ip6tables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53' >> /etc/firewall.user
 
-sed -i '/option disabled/d' /etc/config/wireless
+[ -w /etc/config/wireless ] && sed -i '/option disabled/d' /etc/config/wireless
 sed -i '/set wireless.radio${devidx}.disabled/d' /lib/wifi/mac80211.sh
 
 sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release
@@ -67,19 +75,21 @@ fi
 
 #sed -i '/REDIRECT --to-ports 53/d' /etc/firewall.user
 
-uci set dhcp.@dnsmasq[0].interface='br-lan'
-uci set dhcp.@dnsmasq[0].port='54'
-uci add_list dhcp.@dnsmasq[0].server='127.0.0.1#5053'
-uci set dhcp.@dnsmasq[0].filter_aaaa='1'
-uci add_list dhcp.lan.dhcp_option='6,192.168.1.1'
-uci commit dhcp
+uci -q batch <<-EOF >/dev/null
+	set dhcp.@dnsmasq[0].interface='br-lan'
+	set dhcp.@dnsmasq[0].port='54'
+	add_list dhcp.@dnsmasq[0].server='127.0.0.1#5053'
+	set dhcp.@dnsmasq[0].filter_aaaa='1'
+	add_list dhcp.lan.dhcp_option='6,192.168.1.1'
+
+	delete dhcp.@dnsmasq[0].resolvfile
+	set dhcp.@dnsmasq[0].noresolv=1
+	commit dhcp
+EOF
 
 uci set network.lan.dns='127.0.0.1'
 uci commit network
 
-uci delete dhcp.@dnsmasq[0].resolvfile
-uci set dhcp.@dnsmasq[0].noresolv=1
-uci commit dhcp
 rm -rf /tmp/luci-modulecache/
 rm -f /tmp/luci-indexcache
 
