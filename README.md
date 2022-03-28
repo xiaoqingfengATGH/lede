@@ -59,7 +59,7 @@
 
 
 编译前：
-1. 首先装好 Ubuntu 64bit，推荐  Ubuntu 18 LTS x64
+1. 首先装好 Ubuntu 64bit，推荐  Ubuntu 20 LTS x64
 2. 至少30G空闲硬盘空间
 3. 2G以上内存，建议4G
 
@@ -82,6 +82,51 @@
 8. `make -j1 V=s` （-j1 后面是线程数。第一次编译推荐用单线程，国内请尽量全局科学上网）即可开始编译你要的固件了。
 
 编译成功后，再次编译可以启动多线程编译。如4核心8线程i7上开启16线程使用`make -j16 V=sc`
+------
+使用Windows子系统（WSL、WSL2）编译：
+
+首次编译：
+```bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin make -j1 V=s 
+```
+二次编译：
+```bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin make -j$(($(nproc) + 1)) V=s
+```
+------
+macOS 原生系统进行编译：
+------
+1.在 AppStore 中安装 Xcode
+
+2. 安装 Homebrew：
+```bash
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+3. 使用 Homebrew 安装工具链、依赖与基础软件包:
+```bash
+brew unlink awk
+brew install coreutils diffutils findutils gawk gnu-getopt gnu-tar grep make wget quilt xz
+brew install gcc@11
+```
+
+4.然后输入以下命令，添加到系统环境变量中：
+```bash
+echo 'export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"' >> ~/.bashrc
+echo 'export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"' >> ~/.bashrc
+echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bashrc
+echo 'export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"' >> ~/.bashrc
+echo 'export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"' >> ~/.bashrc
+echo 'export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"' >> ~/.bashrc
+echo 'export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"' >> ~/.bashrc
+```
+
+4.重新加载一下 shell 启动文件
+```bash
+source ~/.bashrc
+```
+
+然后输入 bash 命令，进入bash shell，其他步骤参考Linux构建
 
 ## 固件下载
 如需直接编译完成的固件，请访问Google网盘
