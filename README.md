@@ -48,7 +48,7 @@
 
 感谢Lean（coolsnowwolf），Lienol，CTCGFW等等作者。
 
-============================================================================
+------
 
 ## 编译说明
 
@@ -82,6 +82,7 @@
 8. `make -j1 V=s` （-j1 后面是线程数。第一次编译推荐用单线程，国内请尽量全局科学上网）即可开始编译你要的固件了。
 
 编译成功后，再次编译可以启动多线程编译。如4核心8线程i7上开启16线程使用`make -j16 V=sc`
+
 ------
 使用Windows子系统（WSL、WSL2）编译：
 
@@ -93,6 +94,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin make -j1 V=s
 ```bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin make -j$(($(nproc) + 1)) V=s
 ```
+
 ------
 macOS 原生系统进行编译：
 ------
