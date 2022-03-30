@@ -3,20 +3,11 @@
 disablePkgsList="
 ./feeds/pw/chinadns-ng 
 ./feeds/pw/ipt2socks 
+./feeds/pw/shadowsocksr-libev 
+./feeds/pw/shadowsocks-rust 
+./feeds/lienol/verysync 
+./feeds/lienol/luci-app-verysync 
 ./feeds/lienol/luci-app-softethervpn 
-./package/lean/luci-app-kodexplorer 
-./package/lean/luci-lib-docker 
-./package/lean/luci-app-dockerman 
-./package/lean/kcptun 
-./package/lean/luci-theme-argon 
-./package/lean/v2ray 
-./package/lean/v2ray-plugin 
-./package/lean/xray 
-./package/lean/luci-app-jd-dailybonus 
-./package/lean/luci-app-docker 
-./package/lean/softethervpn5 
-./package/lean/luci-app-softethervpn 
-./package/lean/luci-app-netdata 
 ./feeds/packages/utils/docker-compose 
 ./feeds/packages/net/miniupnpd 
 ./feeds/packages/net/mwan3 
@@ -33,7 +24,21 @@ disablePkgsList="
 ./feeds/packages/net/smartdns 
 ./feeds/packages/net/xtables-addons 
 ./feeds/packages/net/softethervpn5 
-./feeds/luci/applications/luci-app-sqm
+./feeds/packages/net/pdnsd-alt 
+./feeds/packages/net/microsocks 
+./feeds/packages/net/dns2socks 
+./feeds/luci/applications/luci-app-sqm 
+./feeds/luci/applications/luci-app-dockerman 
+./feeds/luci/applications/luci-app-kodexplorer 
+./feeds/luci/applications/luci-app-ipsec-server 
+./feeds/luci/applications/luci-app-serverchan 
+./feeds/luci/applications/luci-app-pptp-server 
+./feeds/luci/applications/luci-app-pppoe-relay 
+./feeds/luci/applications/luci-app-guest-wifi 
+./feeds/luci/applications/luci-app-ramfree 
+./feeds/luci/applications/luci-app-netdata 
+./feeds/luci/collections/luci-lib-docker 
+./feeds/luci/themes/luci-theme-argon
 "
 
 function disableDulicatedPkg()
