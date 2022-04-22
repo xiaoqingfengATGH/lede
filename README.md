@@ -57,6 +57,7 @@
 2. 国内用户编译前最好准备好梯子
 3. 默认登陆IP 192.168.1.1, 密码 password
 
+## 编译命令
 
 编译前：
 1. 首先装好 Ubuntu 64bit，推荐  Ubuntu 20 LTS x64
@@ -86,9 +87,10 @@
 ------
 使用Windows子系统（WSL、WSL2）编译：
 
-首次编译：
+由于 WSL 的 PATH 中包含带有空格的 Windows 路径，有可能会导致编译失败，请在 `make` 前面加上：
+
 ```bash
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin make -j1 V=s 
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ```
 二次编译：
 ```bash
@@ -100,33 +102,25 @@ macOS 原生系统进行编译：
 ------
 1.在 AppStore 中安装 Xcode
 
+### macOS 原生系统进行编译
+
+1. 在 AppStore 中安装 Xcode
+
 2. 安装 Homebrew：
-```bash
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-```
+
+   ```bash
+   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+   ```
 
 3. 使用 Homebrew 安装工具链、依赖与基础软件包:
-```bash
-brew unlink awk
-brew install coreutils diffutils findutils gawk gnu-getopt gnu-tar grep make ncurses pkg-config wget quilt xz
-brew install gcc@11
-```
 
-4.然后输入以下命令，添加到系统环境变量中：
-```bash
-echo 'export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"' >> ~/.bashrc
-echo 'export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"' >> ~/.bashrc
-echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bashrc
-echo 'export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"' >> ~/.bashrc
-echo 'export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"' >> ~/.bashrc
-echo 'export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"' >> ~/.bashrc
-echo 'export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"' >> ~/.bashrc
-```
+   ```bash
+   brew unlink awk
+   brew install coreutils diffutils findutils gawk gnu-getopt gnu-tar grep make ncurses pkg-config wget quilt xz
+   brew install gcc@11
+   ```
 
-4.重新加载一下 shell 启动文件
-```bash
-source ~/.bashrc
-```
+4. 然后输入以下命令，添加到系统环境变量中：
 
 然后输入 bash 命令，进入bash shell，其他步骤参考Linux构建
 
