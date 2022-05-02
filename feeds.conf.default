@@ -1,6 +1,6 @@
 src-git packages https://github.com/xiaoqingfengATGH/feeds-packages
 src-git luci https://github.com/xiaoqingfengATGH/feeds-luci
-src-git routing https://git.openwrt.org/feed/routing.git
+src-git routing https://github.com/coolsnowwolf/routing
 src-git telephony https://git.openwrt.org/feed/telephony.git
 src-git pwluci https://github.com/homelede/openwrt-passwall.git;luci
 src-git pw https://github.com/homelede/openwrt-passwall.git;packages

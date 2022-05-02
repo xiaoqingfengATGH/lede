@@ -7,7 +7,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=openssl-qat
-PKG_VERSION:=0.6.4
+PKG_VERSION:=0.6.12
 PKG_RELEASE:=1
 
 PKG_SOURCE:=v${PKG_VERSION}.tar.gz
@@ -46,8 +46,8 @@ endef
 #CONFIGURE_ARGS += --with-openssl_install_dir=$(PKG_INSTALL_DIR)/usr 
 CONFIGURE_ARGS += --prefix=$(PKG_INSTALL_DIR) 
 
-CONFIGURE_ARGS += $(if $(CONFIG_QAT_C3XXX)                            ,--with-qat_dir=$(KERNEL_BUILD_DIR)/quickassist-c3xxx-1.7)
-CONFIGURE_ARGS += $(if $(CONFIG_QAT_C2XXX)                            ,--with-qat_dir=$(KERNEL_BUILD_DIR)/quickassist-c2xxx-1.5)
+CONFIGURE_ARGS += $(if $(CONFIG_QAT_C3XXX)                            ,--with-qat_hw_dir=$(KERNEL_BUILD_DIR)/quickassist-c3xxx-1.7)
+CONFIGURE_ARGS += $(if $(CONFIG_QAT_C2XXX)                            ,--with-qat_hw_dir=$(KERNEL_BUILD_DIR)/quickassist-c2xxx-1.5)
 
 CONFIGURE_ARGS += $(if $(CONFIG_QAT_ENGINE_DISABLE_RSA)               ,--disable-qat_rsa)
 CONFIGURE_ARGS += $(if $(CONFIG_QAT_ENGINE_DISABLE_DSA)               ,--disable-qat_dsa)
