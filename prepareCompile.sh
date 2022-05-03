@@ -36,6 +36,7 @@ disablePkgsList="
 ./feeds/luci/applications/luci-app-guest-wifi 
 ./feeds/luci/applications/luci-app-ramfree 
 ./feeds/luci/applications/luci-app-netdata 
+./feeds/luci/applications/luci-app-accesscontrol 
 ./feeds/luci/collections/luci-lib-docker 
 ./feeds/luci/themes/luci-theme-argon
 "
