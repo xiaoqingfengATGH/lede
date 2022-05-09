@@ -78,12 +78,19 @@ fi
 uci -q batch <<-EOF >/dev/null
 	set dhcp.@dnsmasq[0].interface='br-lan'
 	set dhcp.@dnsmasq[0].port='54'
-	add_list dhcp.@dnsmasq[0].server='127.0.0.1#5053'
 	set dhcp.@dnsmasq[0].filter_aaaa='1'
+	add_list dhcp.@dnsmasq[0].server='127.0.0.1#5053'
 	add_list dhcp.lan.dhcp_option='6,192.168.1.1'
 
 	delete dhcp.@dnsmasq[0].resolvfile
-	set dhcp.@dnsmasq[0].noresolv=1
+	set dhcp.@dnsmasq[0].noresolv='1'
+
+	delete dhcp.lan.ra_slaac
+	delete dhcp.lan.ra
+	delete dhcp.lan.dhcpv6
+	delete dhcp.lan.ndp
+	delete dhcp.lan.ra_management
+	
 	commit dhcp
 EOF
 
