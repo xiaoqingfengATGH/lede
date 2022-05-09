@@ -66,6 +66,7 @@ CONFIG_DEFAULT_autocore-x86=y
 CONFIG_DEFAULT_automount=y
 CONFIG_DEFAULT_autosamba=y
 CONFIG_DEFAULT_base-files=y
+CONFIG_DEFAULT_bash=y
 CONFIG_DEFAULT_bind-dig=y
 CONFIG_DEFAULT_block-mount=y
 CONFIG_DEFAULT_brcmfmac-firmware-43602a1-pcie=y
@@ -73,6 +74,9 @@ CONFIG_DEFAULT_busybox=y
 CONFIG_DEFAULT_ca-certificates=y
 CONFIG_DEFAULT_cfdisk=y
 CONFIG_DEFAULT_coremark=y
+CONFIG_DEFAULT_coreutils=y
+CONFIG_DEFAULT_coreutils-nohup=y
+CONFIG_DEFAULT_curl=y
 CONFIG_DEFAULT_ddns-scripts_aliyun=y
 CONFIG_DEFAULT_ddns-scripts_dnspod=y
 CONFIG_DEFAULT_default-settings=y
@@ -86,6 +90,8 @@ CONFIG_DEFAULT_firewall=y
 CONFIG_DEFAULT_fstools=y
 CONFIG_DEFAULT_homelede-autoconfig=y
 CONFIG_DEFAULT_htop=y
+CONFIG_DEFAULT_ip-full=y
+CONFIG_DEFAULT_ipset=y
 CONFIG_DEFAULT_iptables=y
 CONFIG_DEFAULT_iptables-mod-extra=y
 CONFIG_DEFAULT_iptables-mod-tproxy=y
@@ -148,6 +154,8 @@ CONFIG_DEFAULT_kmod-usb-net-rtl8152-vendor=y
 CONFIG_DEFAULT_kmod-via-velocity=y
 CONFIG_DEFAULT_kmod-vmxnet3=y
 CONFIG_DEFAULT_libc=y
+CONFIG_DEFAULT_libcap=y
+CONFIG_DEFAULT_libcap-bin=y
 CONFIG_DEFAULT_libgcc=y
 CONFIG_DEFAULT_libustream-openssl=y
 CONFIG_DEFAULT_lm-sensors=y
@@ -206,6 +214,8 @@ CONFIG_DEFAULT_ppp-mod-pppol2tp=y
 CONFIG_DEFAULT_ppp-mod-pptp=y
 CONFIG_DEFAULT_pppossh=y
 CONFIG_DEFAULT_procd=y
+CONFIG_DEFAULT_ruby=y
+CONFIG_DEFAULT_ruby-yaml=y
 CONFIG_DEFAULT_subweb=y
 CONFIG_DEFAULT_uci=y
 CONFIG_DEFAULT_uclient-fetch=y
@@ -1696,7 +1706,7 @@ CONFIG_PACKAGE_libstdcpp=y
 CONFIG_PACKAGE_logd=y
 CONFIG_PACKAGE_mtd=y
 CONFIG_PACKAGE_netifd=y
-# CONFIG_PACKAGE_nft-qos is not set
+CONFIG_PACKAGE_nft-qos=y
 # CONFIG_PACKAGE_om-watchdog is not set
 CONFIG_PACKAGE_openwrt-keyring=y
 CONFIG_PACKAGE_opkg=y
@@ -1713,7 +1723,7 @@ CONFIG_PACKAGE_procd=y
 # CONFIG_PACKAGE_procd-selinux is not set
 # CONFIG_PACKAGE_procd-ujail is not set
 # CONFIG_PACKAGE_procd-ujail-console is not set
-CONFIG_PACKAGE_qos-scripts=m
+CONFIG_PACKAGE_qos-scripts=y
 # CONFIG_PACKAGE_refpolicy is not set
 CONFIG_PACKAGE_resolveip=y
 CONFIG_PACKAGE_rpcd=y
@@ -1722,7 +1732,7 @@ CONFIG_PACKAGE_rpcd=y
 # CONFIG_PACKAGE_rpcd-mod-rpcsys is not set
 # CONFIG_PACKAGE_selinux-policy is not set
 # CONFIG_PACKAGE_snapshot-tool is not set
-# CONFIG_PACKAGE_sqm-scripts is not set
+CONFIG_PACKAGE_sqm-scripts=y
 # CONFIG_PACKAGE_sqm-scripts-extra is not set
 # CONFIG_PACKAGE_swconfig is not set
 CONFIG_PACKAGE_ubox=y
@@ -2429,18 +2439,18 @@ CONFIG_PACKAGE_kmod-br-netfilter=y
 # CONFIG_PACKAGE_kmod-ebtables-watchers is not set
 CONFIG_PACKAGE_kmod-ip6tables=y
 # CONFIG_PACKAGE_kmod-ip6tables-extra is not set
-# CONFIG_PACKAGE_kmod-ipt-checksum is not set
-# CONFIG_PACKAGE_kmod-ipt-cluster is not set
-# CONFIG_PACKAGE_kmod-ipt-clusterip is not set
+CONFIG_PACKAGE_kmod-ipt-checksum=y
+CONFIG_PACKAGE_kmod-ipt-cluster=y
+CONFIG_PACKAGE_kmod-ipt-clusterip=y
 CONFIG_PACKAGE_kmod-ipt-conntrack=y
 CONFIG_PACKAGE_kmod-ipt-conntrack-extra=y
-# CONFIG_PACKAGE_kmod-ipt-conntrack-label is not set
+CONFIG_PACKAGE_kmod-ipt-conntrack-label=y
 CONFIG_PACKAGE_kmod-ipt-core=y
-# CONFIG_PACKAGE_kmod-ipt-debug is not set
+CONFIG_PACKAGE_kmod-ipt-debug=y
 CONFIG_PACKAGE_kmod-ipt-extra=y
 CONFIG_PACKAGE_kmod-ipt-filter=y
 CONFIG_PACKAGE_kmod-ipt-fullconenat=y
-# CONFIG_PACKAGE_kmod-ipt-hashlimit is not set
+CONFIG_PACKAGE_kmod-ipt-hashlimit=y
 CONFIG_PACKAGE_kmod-ipt-ipopt=y
 CONFIG_PACKAGE_kmod-ipt-iprange=y
 CONFIG_PACKAGE_kmod-ipt-ipsec=y
@@ -2449,18 +2459,18 @@ CONFIG_PACKAGE_kmod-ipt-ipset=y
 CONFIG_PACKAGE_kmod-ipt-nat=y
 CONFIG_PACKAGE_kmod-ipt-nat-extra=y
 CONFIG_PACKAGE_kmod-ipt-nat6=y
-# CONFIG_PACKAGE_kmod-ipt-nflog is not set
-# CONFIG_PACKAGE_kmod-ipt-nfqueue is not set
+CONFIG_PACKAGE_kmod-ipt-nflog=y
+CONFIG_PACKAGE_kmod-ipt-nfqueue=y
 CONFIG_PACKAGE_kmod-ipt-offload=y
-# CONFIG_PACKAGE_kmod-ipt-physdev is not set
+CONFIG_PACKAGE_kmod-ipt-physdev=y
 CONFIG_PACKAGE_kmod-ipt-raw=y
-# CONFIG_PACKAGE_kmod-ipt-raw6 is not set
-# CONFIG_PACKAGE_kmod-ipt-rpfilter is not set
-# CONFIG_PACKAGE_kmod-ipt-rtpengine is not set
-# CONFIG_PACKAGE_kmod-ipt-tee is not set
+CONFIG_PACKAGE_kmod-ipt-raw6=y
+CONFIG_PACKAGE_kmod-ipt-rpfilter=y
+CONFIG_PACKAGE_kmod-ipt-rtpengine=y
+CONFIG_PACKAGE_kmod-ipt-tee=y
 CONFIG_PACKAGE_kmod-ipt-tproxy=y
-# CONFIG_PACKAGE_kmod-ipt-u32 is not set
-# CONFIG_PACKAGE_kmod-ipt-ulog is not set
+CONFIG_PACKAGE_kmod-ipt-u32=y
+CONFIG_PACKAGE_kmod-ipt-ulog=y
 # CONFIG_PACKAGE_kmod-netatop is not set
 CONFIG_PACKAGE_kmod-nf-conntrack=y
 CONFIG_PACKAGE_kmod-nf-conntrack-netlink=y
@@ -2478,15 +2488,15 @@ CONFIG_PACKAGE_kmod-nf-nathelper-extra=y
 CONFIG_PACKAGE_kmod-nf-reject=y
 CONFIG_PACKAGE_kmod-nf-reject6=y
 CONFIG_PACKAGE_kmod-nfnetlink=y
-# CONFIG_PACKAGE_kmod-nfnetlink-log is not set
-# CONFIG_PACKAGE_kmod-nfnetlink-queue is not set
+CONFIG_PACKAGE_kmod-nfnetlink-log=y
+CONFIG_PACKAGE_kmod-nfnetlink-queue=y
 # CONFIG_PACKAGE_kmod-nft-arp is not set
-CONFIG_PACKAGE_kmod-nft-bridge=m
-CONFIG_PACKAGE_kmod-nft-core=m
+CONFIG_PACKAGE_kmod-nft-bridge=y
+CONFIG_PACKAGE_kmod-nft-core=y
 # CONFIG_PACKAGE_kmod-nft-fib is not set
 # CONFIG_PACKAGE_kmod-nft-nat is not set
 # CONFIG_PACKAGE_kmod-nft-nat6 is not set
-CONFIG_PACKAGE_kmod-nft-netdev=m
+CONFIG_PACKAGE_kmod-nft-netdev=y
 # CONFIG_PACKAGE_kmod-nft-offload is not set
 # CONFIG_PACKAGE_kmod-nft-queue is not set
 # end of Netfilter Extensions
@@ -2521,7 +2531,7 @@ CONFIG_PACKAGE_kmod-forcedeth=y
 # CONFIG_PACKAGE_kmod-hfcpci is not set
 CONFIG_PACKAGE_kmod-i40e=y
 # CONFIG_PACKAGE_kmod-iavf is not set
-CONFIG_PACKAGE_kmod-ifb=m
+CONFIG_PACKAGE_kmod-ifb=y
 CONFIG_PACKAGE_kmod-igb=y
 CONFIG_PACKAGE_kmod-igbvf=y
 CONFIG_PACKAGE_kmod-igc=y
@@ -2639,7 +2649,7 @@ CONFIG_PACKAGE_kmod-pptp=y
 # CONFIG_PACKAGE_kmod-sched is not set
 # CONFIG_PACKAGE_kmod-sched-act-vlan is not set
 # CONFIG_PACKAGE_kmod-sched-bpf is not set
-CONFIG_PACKAGE_kmod-sched-cake=m
+CONFIG_PACKAGE_kmod-sched-cake=y
 CONFIG_PACKAGE_kmod-sched-connmark=y
 CONFIG_PACKAGE_kmod-sched-core=y
 # CONFIG_PACKAGE_kmod-sched-ctinfo is not set
@@ -5067,7 +5077,7 @@ CONFIG_PACKAGE_luci-app-pptp-server=m
 CONFIG_PACKAGE_luci-app-qbittorrent=m
 CONFIG_PACKAGE_luci-app-qbittorrent_static=y
 # CONFIG_PACKAGE_luci-app-qbittorrent_dynamic is not set
-# CONFIG_PACKAGE_luci-app-qos is not set
+CONFIG_PACKAGE_luci-app-qos=y
 # CONFIG_PACKAGE_luci-app-radicale is not set
 CONFIG_PACKAGE_luci-app-ramfree=y
 # CONFIG_PACKAGE_luci-app-rclone is not set
@@ -5085,7 +5095,7 @@ CONFIG_PACKAGE_luci-app-smartdns=y
 # CONFIG_PACKAGE_luci-app-socat is not set
 # CONFIG_PACKAGE_luci-app-softethervpn is not set
 # CONFIG_PACKAGE_luci-app-splash is not set
-# CONFIG_PACKAGE_luci-app-sqm is not set
+CONFIG_PACKAGE_luci-app-sqm=y
 # CONFIG_PACKAGE_luci-app-squid is not set
 # CONFIG_PACKAGE_luci-app-ssr-mudb-server is not set
 CONFIG_PACKAGE_luci-app-ssr-plus=m
@@ -5393,6 +5403,31 @@ CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
 # CONFIG_PACKAGE_luci-i18n-passwall-zh_Hans is not set
 CONFIG_PACKAGE_luci-i18n-pptp-server-zh-cn=m
 CONFIG_PACKAGE_luci-i18n-qbittorrent-zh-cn=m
+# CONFIG_PACKAGE_luci-i18n-qos-ca is not set
+# CONFIG_PACKAGE_luci-i18n-qos-cs is not set
+# CONFIG_PACKAGE_luci-i18n-qos-de is not set
+# CONFIG_PACKAGE_luci-i18n-qos-el is not set
+# CONFIG_PACKAGE_luci-i18n-qos-en is not set
+# CONFIG_PACKAGE_luci-i18n-qos-es is not set
+# CONFIG_PACKAGE_luci-i18n-qos-fr is not set
+# CONFIG_PACKAGE_luci-i18n-qos-he is not set
+# CONFIG_PACKAGE_luci-i18n-qos-hu is not set
+# CONFIG_PACKAGE_luci-i18n-qos-it is not set
+# CONFIG_PACKAGE_luci-i18n-qos-ja is not set
+# CONFIG_PACKAGE_luci-i18n-qos-ms is not set
+# CONFIG_PACKAGE_luci-i18n-qos-no is not set
+# CONFIG_PACKAGE_luci-i18n-qos-pl is not set
+# CONFIG_PACKAGE_luci-i18n-qos-pt is not set
+# CONFIG_PACKAGE_luci-i18n-qos-pt-br is not set
+# CONFIG_PACKAGE_luci-i18n-qos-ro is not set
+# CONFIG_PACKAGE_luci-i18n-qos-ru is not set
+# CONFIG_PACKAGE_luci-i18n-qos-sk is not set
+# CONFIG_PACKAGE_luci-i18n-qos-sv is not set
+# CONFIG_PACKAGE_luci-i18n-qos-tr is not set
+# CONFIG_PACKAGE_luci-i18n-qos-uk is not set
+# CONFIG_PACKAGE_luci-i18n-qos-vi is not set
+CONFIG_PACKAGE_luci-i18n-qos-zh-cn=y
+# CONFIG_PACKAGE_luci-i18n-qos-zh-tw is not set
 CONFIG_PACKAGE_luci-i18n-ramfree-zh-cn=y
 # CONFIG_PACKAGE_luci-i18n-samba-ca is not set
 # CONFIG_PACKAGE_luci-i18n-samba-cs is not set
@@ -5420,6 +5455,8 @@ CONFIG_PACKAGE_luci-i18n-ramfree-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-samba-zh-cn=y
 # CONFIG_PACKAGE_luci-i18n-samba-zh-tw is not set
 CONFIG_PACKAGE_luci-i18n-smartdns-zh-cn=y
+# CONFIG_PACKAGE_luci-i18n-sqm-en is not set
+CONFIG_PACKAGE_luci-i18n-sqm-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-ssr-plus-zh-cn=m
 # CONFIG_PACKAGE_luci-i18n-ssr-plus-zh_Hans is not set
 CONFIG_PACKAGE_luci-i18n-timecontrol-zh-cn=y
@@ -5736,35 +5773,35 @@ CONFIG_PACKAGE_ip6tables-mod-nat=y
 CONFIG_PACKAGE_iptables=y
 # CONFIG_IPTABLES_CONNLABEL is not set
 # CONFIG_IPTABLES_NFTABLES is not set
-# CONFIG_PACKAGE_iptables-mod-checksum is not set
-# CONFIG_PACKAGE_iptables-mod-cluster is not set
-# CONFIG_PACKAGE_iptables-mod-clusterip is not set
+CONFIG_PACKAGE_iptables-mod-checksum=m
+CONFIG_PACKAGE_iptables-mod-cluster=m
+CONFIG_PACKAGE_iptables-mod-clusterip=m
 CONFIG_PACKAGE_iptables-mod-conntrack-extra=y
 CONFIG_PACKAGE_iptables-mod-extra=y
 CONFIG_PACKAGE_iptables-mod-filter=y
 CONFIG_PACKAGE_iptables-mod-fullconenat=y
-# CONFIG_PACKAGE_iptables-mod-hashlimit is not set
+CONFIG_PACKAGE_iptables-mod-hashlimit=y
 CONFIG_PACKAGE_iptables-mod-ipopt=y
 CONFIG_PACKAGE_iptables-mod-iprange=y
 CONFIG_PACKAGE_iptables-mod-ipsec=y
 # CONFIG_PACKAGE_iptables-mod-led is not set
 CONFIG_PACKAGE_iptables-mod-nat-extra=y
-# CONFIG_PACKAGE_iptables-mod-nflog is not set
-# CONFIG_PACKAGE_iptables-mod-nfqueue is not set
-# CONFIG_PACKAGE_iptables-mod-physdev is not set
-# CONFIG_PACKAGE_iptables-mod-rpfilter is not set
-# CONFIG_PACKAGE_iptables-mod-rtpengine is not set
-# CONFIG_PACKAGE_iptables-mod-tee is not set
+CONFIG_PACKAGE_iptables-mod-nflog=y
+CONFIG_PACKAGE_iptables-mod-nfqueue=y
+CONFIG_PACKAGE_iptables-mod-physdev=y
+CONFIG_PACKAGE_iptables-mod-rpfilter=y
+CONFIG_PACKAGE_iptables-mod-rtpengine=y
+CONFIG_PACKAGE_iptables-mod-tee=y
 CONFIG_PACKAGE_iptables-mod-tproxy=y
-# CONFIG_PACKAGE_iptables-mod-trace is not set
-# CONFIG_PACKAGE_iptables-mod-u32 is not set
-# CONFIG_PACKAGE_iptables-mod-ulog is not set
+CONFIG_PACKAGE_iptables-mod-trace=y
+CONFIG_PACKAGE_iptables-mod-u32=y
+CONFIG_PACKAGE_iptables-mod-ulog=y
 # CONFIG_PACKAGE_miniupnpc is not set
 CONFIG_PACKAGE_miniupnpd-iptables=y
 # CONFIG_PACKAGE_miniupnpd-nftables is not set
 # CONFIG_PACKAGE_natpmpc is not set
 # CONFIG_PACKAGE_nftables-json is not set
-CONFIG_PACKAGE_nftables-nojson=m
+CONFIG_PACKAGE_nftables-nojson=y
 # CONFIG_PACKAGE_shorewall is not set
 # CONFIG_PACKAGE_shorewall-core is not set
 # CONFIG_PACKAGE_shorewall-lite is not set
@@ -6058,9 +6095,9 @@ CONFIG_PACKAGE_mwan3=y
 # CONFIG_PACKAGE_smcroute is not set
 # CONFIG_PACKAGE_ss is not set
 # CONFIG_PACKAGE_sslh is not set
-# CONFIG_PACKAGE_tc-full is not set
-CONFIG_PACKAGE_tc-mod-iptables=m
-CONFIG_PACKAGE_tc-tiny=m
+CONFIG_PACKAGE_tc-full=y
+CONFIG_PACKAGE_tc-mod-iptables=y
+# CONFIG_PACKAGE_tc-tiny is not set
 # CONFIG_PACKAGE_tcpproxy is not set
 # CONFIG_PACKAGE_udp-broadcast-relay-redux is not set
 # CONFIG_PACKAGE_vis is not set
@@ -6566,7 +6603,9 @@ CONFIG_PACKAGE_AdGuardHome=y
 CONFIG_PACKAGE_HomeRedirect=y
 # CONFIG_PACKAGE_UDPspeeder is not set
 # CONFIG_PACKAGE_acme is not set
+# CONFIG_PACKAGE_acme-deploy is not set
 # CONFIG_PACKAGE_acme-dnsapi is not set
+# CONFIG_PACKAGE_acme-notify is not set
 # CONFIG_PACKAGE_adblock is not set
 # CONFIG_PACKAGE_adbyby is not set
 # CONFIG_PACKAGE_addrwatch is not set
