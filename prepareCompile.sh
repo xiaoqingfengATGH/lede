@@ -27,6 +27,7 @@ disablePkgsList="
 ./feeds/packages/net/microsocks 
 ./feeds/packages/net/dns2socks 
 ./feeds/luci/applications/luci-app-sqm 
+./feeds/luci/applications/luci-app-nft-qos 
 ./feeds/luci/applications/luci-app-dockerman 
 ./feeds/luci/applications/luci-app-kodexplorer 
 ./feeds/luci/applications/luci-app-ipsec-server 
