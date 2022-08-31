@@ -14,13 +14,33 @@ TARGET_DEVICES += embedfire_doornet1
 
 define Device/embedfire_doornet2
   DEVICE_VENDOR := EmbedFire
-  DEVICE_MODEL := DoorNet2
+  DEVICE_MODEL := DoorNet2 1GB
   SOC := rk3399
   UBOOT_DEVICE_NAME := doornet2-rk3399
   IMAGE/sysupgrade.img.gz := boot-common | boot-script nanopi-r4s | pine64-bin | gzip | append-metadata
-  DEVICE_PACKAGES := kmod-r8169 kmod-rtl8821cu -urngd
+  DEVICE_PACKAGES := kmod-r8168 -urngd
 endef
 TARGET_DEVICES += embedfire_doornet2
+
+define Device/fastrhino_r66s
+  DEVICE_VENDOR := FastRhino
+  DEVICE_MODEL := R66S
+  SOC := rk3568
+  UBOOT_DEVICE_NAME := fastrhino-r66s-rk3568
+  IMAGE/sysupgrade.img.gz := boot-common | boot-script nanopi-r5s | pine64-img | gzip | append-metadata
+  DEVICE_PACKAGES := kmod-r8125
+endef
+TARGET_DEVICES += fastrhino_r66s
+
+define Device/firefly_station-p2
+  DEVICE_VENDOR := Firefly
+  DEVICE_MODEL := Station P2
+  SOC := rk3568
+  UBOOT_DEVICE_NAME := station-p2-rk3568
+  IMAGE/sysupgrade.img.gz := boot-common | boot-script nanopi-r5s | pine64-img | gzip | append-metadata
+  DEVICE_PACKAGES := kmod-brcmfmac kmod-ikconfig kmod-ata-ahci-platform station-p2-firmware wpad-openssl
+endef
+TARGET_DEVICES += firefly_station-p2
 
 define Device/friendlyarm_nanopi-neo3
   DEVICE_VENDOR := FriendlyARM
@@ -61,6 +81,26 @@ define Device/friendlyarm_nanopi-r4s
 endef
 TARGET_DEVICES += friendlyarm_nanopi-r4s
 
+define Device/friendlyarm_nanopi-r4se
+  DEVICE_VENDOR := FriendlyARM
+  DEVICE_MODEL := NanoPi R4SE
+  SOC := rk3399
+  UBOOT_DEVICE_NAME := nanopi-r4se-rk3399
+  IMAGE/sysupgrade.img.gz := boot-common | boot-script nanopi-r4s | pine64-bin | gzip | append-metadata
+  DEVICE_PACKAGES := kmod-r8168 -urngd
+endef
+TARGET_DEVICES += friendlyarm_nanopi-r4se
+
+define Device/friendlyelec_nanopi-r5s
+  DEVICE_VENDOR := FriendlyARM
+  DEVICE_MODEL := NanoPi R5S
+  SOC := rk3568
+  UBOOT_DEVICE_NAME := nanopi-r5s-rk3568
+  IMAGE/sysupgrade.img.gz := boot-common | boot-script nanopi-r5s | pine64-img | gzip | append-metadata
+  DEVICE_PACKAGES := kmod-r8125
+endef
+TARGET_DEVICES += friendlyelec_nanopi-r5s
+
 define Device/pine64_rockpro64
   DEVICE_VENDOR := Pine64
   DEVICE_MODEL := RockPro64
@@ -70,6 +110,16 @@ define Device/pine64_rockpro64
   DEVICE_PACKAGES := -urngd
 endef
 TARGET_DEVICES += pine64_rockpro64
+
+define Device/radxa_rock-3a
+  DEVICE_VENDOR := Radxa
+  DEVICE_MODEL := ROCK3 Model A
+  SOC := rk3568
+  SUPPORTED_DEVICES := radxa,rock3a
+  UBOOT_DEVICE_NAME := rock-3a-rk3568
+  IMAGE/sysupgrade.img.gz := boot-common | boot-script nanopi-r5s | pine64-img | gzip | append-metadata
+endef
+TARGET_DEVICES += radxa_rock-3a
 
 define Device/radxa_rock-pi-4
   DEVICE_VENDOR := Radxa

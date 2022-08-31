@@ -314,6 +314,7 @@ static unsigned int sfe_cm_post_routing(struct sk_buff *skb, int is_v4)
 	
 	#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)
     struct net *net=NULL;
+    struct nf_tcp_net *tn=NULL;
 	#endif
 
 	/*
@@ -500,9 +501,10 @@ static unsigned int sfe_cm_post_routing(struct sk_buff *skb, int is_v4)
 		sic.dest_td_max_window = ct->proto.tcp.seen[1].td_maxwin;
 		sic.dest_td_end = ct->proto.tcp.seen[1].td_end;
 		sic.dest_td_max_end = ct->proto.tcp.seen[1].td_maxend;
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0) 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)
 	net = nf_ct_net(ct);
-	if ((net&&net->ct.sysctl_no_window_check)
+	tn = nf_tcp_pernet(net);
+	if ((tn&&tn->tcp_no_window_check)
 #else
 	if (nf_ct_tcp_no_window_check
 #endif
