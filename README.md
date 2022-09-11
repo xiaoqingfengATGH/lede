@@ -130,8 +130,17 @@ macOS 原生系统进行编译：
    ```
 
 4. 然后输入以下命令，添加到系统环境变量中：
+   ```
+   echo 'export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"' >> ~/.bashrc
+   echo 'export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"' >> ~/.bashrc
+   echo 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"' >> ~/.bashrc
+   echo 'export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"' >> ~/.bashrc
+   echo 'export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"' >> ~/.bashrc
+   echo 'export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"' >> ~/.bashrc
+   echo 'export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"' >> ~/.bashrc
+   ```
 
-然后输入 bash 命令，进入bash shell，其他步骤参考Linux构建
+重新加载一下 shell 启动文件 source ~/.bashrc，然后输入 bash 进入 bash shell，就可以和 Linux 一样正常编译了
 
 ## 固件下载
 如需直接编译完成的固件，请访问Google网盘
