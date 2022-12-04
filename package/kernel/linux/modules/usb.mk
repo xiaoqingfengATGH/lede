@@ -477,7 +477,7 @@ $(eval $(call KernelPackage,usb-dwc3))
 
 define KernelPackage/usb-dwc3-qcom
   TITLE:=DWC3 Qualcomm USB driver
-  DEPENDS:=@(TARGET_ipq40xx||TARGET_ipq806x||TARGET_ipq807x) +kmod-usb-dwc3
+  DEPENDS:=@(TARGET_ipq40xx||TARGET_ipq806x||TARGET_ipq807x||TARGET_ipq60xx) +kmod-usb-dwc3
   KCONFIG:= CONFIG_USB_DWC3_QCOM
   FILES:= $(LINUX_DIR)/drivers/usb/dwc3/dwc3-qcom.ko
   AUTOLOAD:=$(call AutoLoad,53,dwc3-qcom,1)
@@ -1138,7 +1138,7 @@ $(eval $(call KernelPackage,usb-net-aqc111))
 
 define KernelPackage/usb-net-asix
   TITLE:=Kernel module for USB-to-Ethernet Asix convertors
-  DEPENDS:=+kmod-libphy +(LINUX_5_15||LINUX_5_19):kmod-mdio-devres
+  DEPENDS:=+kmod-libphy +(LINUX_5_15||LINUX_6_0):kmod-mdio-devres
   KCONFIG:=CONFIG_USB_NET_AX8817X
   FILES:= \
 	$(LINUX_DIR)/drivers/$(USBNET_DIR)/asix.ko \
@@ -1697,6 +1697,7 @@ define KernelPackage/usb3
 	+TARGET_bcm53xx:kmod-usb-bcma \
 	+TARGET_bcm53xx:kmod-phy-bcm-ns-usb3 \
 	+TARGET_ramips_mt7621:kmod-usb-xhci-mtk \
+	+TARGET_mediatek:kmod-usb-xhci-mtk \
 	+(TARGET_apm821xx_nand&&LINUX_5_10):kmod-usb-xhci-pci-renesas
   KCONFIG:= \
 	CONFIG_USB_PCI=y \
@@ -1771,8 +1772,10 @@ define KernelPackage/usb-xhci-mtk
   DEPENDS:=+kmod-usb-xhci-hcd
   KCONFIG:=CONFIG_USB_XHCI_MTK
   HIDDEN:=1
-  FILES:=$(LINUX_DIR)/drivers/usb/host/xhci-mtk.ko
-  AUTOLOAD:=$(call AutoLoad,54,xhci-mtk,1)
+  FILES:= \
+	 $(LINUX_DIR)/drivers/usb/host/xhci-mtk.ko@lt5.13 \
+	 $(LINUX_DIR)/drivers/usb/host/xhci-mtk-hcd.ko@ge5.13
+  AUTOLOAD:=$(call AutoLoad,54,xhci-mtk@lt5.13 xhci-mtk-hcd@gt5.13,1)
   $(call AddDepends/usb)
 endef
 

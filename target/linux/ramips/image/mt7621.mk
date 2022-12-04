@@ -27,18 +27,17 @@ define Build/gemtek-trailer
 endef
 
 define Build/hatlab-gateboard-combined
-	rm -fR $@.bootfs.img
+  rm -fR $@.bootfs.img
 
 	mkfs.fat $@.bootfs.img -C 16384
 	mcopy -i $@.bootfs.img $(IMAGE_KERNEL) ::vmlinux.itb
 
-	( \
-		set $$(ptgen -o $@ -h 4 -s 63 -l 1024 -g -p 16M -p "${CONFIG_TARGET_ROOTFS_PARTSIZE}M" -G ${IMG_PART_DISKGUID}); \
-		BOOTFSOFFSET="$$(($$1 / 512))"; \
-		ROOTFSOFFSET="$$(($$3 / 512))"; \
-		dd if="$@.bootfs.img" of="$@" bs=512 seek="$${BOOTFSOFFSET}" conv=notrunc; \
-		dd if="${IMAGE_ROOTFS}" of="$@" bs=512 seek="$${ROOTFSOFFSET}" conv=notrunc; \
-	)
+	PADDING="1" SIGNATURE="$(IMG_PART_SIGNATURE)" \
+	GUID="$(IMG_PART_DISKGUID)" $(SCRIPT_DIR)/gen_image_generic.sh \
+	$@ \
+	$(CONFIG_TARGET_KERNEL_PARTSIZE) $@.bootfs.img \
+	$(CONFIG_TARGET_ROOTFS_PARTSIZE) $(IMAGE_ROOTFS) \
+	256
 endef
 
 define Build/hatlab-gateboard-kernel
@@ -970,6 +969,16 @@ define Device/jcg_y2
 endef
 TARGET_DEVICES += jcg_y2
 
+define Device/jdcloud_re-sp-01b
+  $(Device/dsa-migration)
+  IMAGE_SIZE := 27328k
+  DEVICE_VENDOR := JDCloud
+  DEVICE_MODEL := RE-SP-01B
+  DEVICE_PACKAGES := kmod-fs-ext4 kmod-mt7603 kmod-mt7615e \
+	kmod-mt7615-firmware kmod-sdhci-mt7620 kmod-usb3
+endef
+TARGET_DEVICES += jdcloud_re-sp-01b
+
 define Device/lenovo_newifi-d1
   $(Device/dsa-migration)
   $(Device/uimage-lzma-loader)
@@ -1061,6 +1070,7 @@ TARGET_DEVICES += linksys_ea8100-v2
 
 define Device/linksys_re6500
   $(Device/dsa-migration)
+  $(Device/uimage-lzma-loader)
   IMAGE_SIZE := 7872k
   DEVICE_VENDOR := Linksys
   DEVICE_MODEL := RE6500
@@ -1842,6 +1852,8 @@ define Device/youku_yk-l2
   DEVICE_MODEL := YK-L2
   DEVICE_PACKAGES := kmod-mt7603 kmod-mt76x2 kmod-usb3 \
 	kmod-usb-ledtrig-usbport
+  UIMAGE_MAGIC := 0x12291000
+  UIMAGE_NAME := 400000000000000000003000
 endef
 TARGET_DEVICES += youku_yk-l2
 

@@ -1137,6 +1137,12 @@ $(eval $(call KernelPackage,dnsresolver))
 define KernelPackage/rxrpc
   SUBMENU:=$(NETWORK_SUPPORT_MENU)
   TITLE:=AF_RXRPC support
+  DEPENDS:= \
+    +kmod-crypto-manager \
+    +kmod-crypto-pcbc \
+    +kmod-crypto-fcrypt \
+    +kmod-udptunnel4 \
+    +IPV6:kmod-udptunnel6
   HIDDEN:=1
   KCONFIG:= \
 	CONFIG_AF_RXRPC \
@@ -1145,7 +1151,6 @@ define KernelPackage/rxrpc
   FILES:= \
 	$(LINUX_DIR)/net/rxrpc/rxrpc.ko
   AUTOLOAD:=$(call AutoLoad,30,rxrpc.ko)
-  DEPENDS:= +kmod-crypto-manager +kmod-crypto-pcbc +kmod-crypto-fcrypt
 endef
 
 define KernelPackage/rxrpc/description
@@ -1334,7 +1339,7 @@ define KernelPackage/qrtr
   SUBMENU:=$(NETWORK_SUPPORT_MENU)
   TITLE:=Qualcomm IPC Router support
   HIDDEN:=1
-  DEPENDS:=@(LINUX_5_15||LINUX_5_19)
+  DEPENDS:=@(LINUX_5_15||LINUX_6_0)
   KCONFIG:=CONFIG_QRTR
   FILES:= \
   $(LINUX_DIR)/net/qrtr/qrtr.ko \
@@ -1366,7 +1371,7 @@ $(eval $(call KernelPackage,qrtr-tun))
 define KernelPackage/qrtr-smd
   SUBMENU:=$(NETWORK_SUPPORT_MENU)
   TITLE:=SMD IPC Router channels
-  DEPENDS:=+kmod-qrtr @TARGET_ipq807x
+  DEPENDS:=+kmod-qrtr @(TARGET_ipq60xx||TARGET_ipq807x)
   KCONFIG:=CONFIG_QRTR_SMD
   FILES:= $(LINUX_DIR)/net/qrtr/qrtr-smd.ko
   AUTOLOAD:=$(call AutoProbe,qrtr-smd)
@@ -1392,3 +1397,49 @@ define KernelPackage/qrtr-mhi/description
 endef
 
 $(eval $(call KernelPackage,qrtr-mhi))
+
+
+define KernelPackage/mptcp
+  SUBMENU:=$(NETWORK_SUPPORT_MENU)
+  TITLE:=MultiPath TCP support
+  KCONFIG:=CONFIG_MPTCP@ge5.6=y
+  AUTOLOAD:=$(call AutoProbe,mptcp)
+endef
+
+define KernelPackage/mptcp/description
+ MPTCP is a module made for MultiPath TCP support
+endef
+
+$(eval $(call KernelPackage,mptcp))
+
+
+define KernelPackage/mptcp_ipv6
+  SUBMENU:=$(NETWORK_SUPPORT_MENU)
+  TITLE:=MultiPath TCP IPv6 support
+  DEPENDS:=@IPV6 +kmod-mptcp
+  KCONFIG:=CONFIG_MPTCP_IPV6@ge5.6=y
+  AUTOLOAD:=$(call AutoProbe,mptcp_ipv6)
+endef
+
+define KernelPackage/mptcp_ipv6/description
+ MPTCP_IPV6 is a module made for MultiPath TCP IPv6 support
+endef
+
+$(eval $(call KernelPackage,mptcp_ipv6))
+
+
+define KernelPackage/inet-mptcp-diag
+  SUBMENU:=$(NETWORK_SUPPORT_MENU)
+  TITLE:=INET diag support for MultiPath TCP
+  DEPENDS:=kmod-mptcp +kmod-inet-diag
+  KCONFIG:= CONFIG_INET_MPTCP_DIAG@ge5.6
+  FILES:= $(LINUX_DIR)/net/mptcp/mptcp_diag.ko@ge5.6
+  AUTOLOAD:=$(call AutoProbe,mptcp_diag)
+endef
+
+define KernelPackage/inet-mptcp-diag/description
+Support for INET (MultiPath TCP) socket monitoring interface used by
+native Linux tools such as ss.
+endef
+
+$(eval $(call KernelPackage,inet-mptcp-diag))

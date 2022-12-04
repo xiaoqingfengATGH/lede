@@ -9,12 +9,12 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dosfstools
 PKG_CPE_ID:=cpe:/a:dosfstools_project:dosfstools
-PKG_VERSION:=4.1
+PKG_VERSION:=4.2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=https://github.com/dosfstools/dosfstools/releases/download/v$(PKG_VERSION)/ \
 		http://fossies.org/linux/misc
-PKG_HASH:=e6b2aca70ccc3fe3687365009dd94a2e18e82b688ed4e260e04b7412471cc173
+PKG_HASH:=ba7c716ff9b8208a3bba5094a77584a7dc814141de09ab4ce1ae9b84bbcd7844
 
 HOST_FIXUP:=autoreconf
 
@@ -23,5 +23,9 @@ include $(INCLUDE_DIR)/host-build.mk
 ifeq ($(HOST_OS),Darwin)
 HOST_CFLAGS += -UHAVE_ENDIAN_H
 endif
+
+define Host/Uninstall
+	-$(call Host/Compile/Default,uninstall)
+endef
 
 $(eval $(call HostBuild))
