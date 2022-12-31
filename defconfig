@@ -2896,7 +2896,7 @@ CONFIG_PACKAGE_kmod-usb-net-rtl8152-vendor=m
 # CONFIG_PACKAGE_kmod-usb-net-sr9700 is not set
 # CONFIG_PACKAGE_kmod-usb-ohci is not set
 # CONFIG_PACKAGE_kmod-usb-ohci-pci is not set
-# CONFIG_PACKAGE_kmod-usb-printer is not set
+CONFIG_PACKAGE_kmod-usb-printer=m
 # CONFIG_PACKAGE_kmod-usb-serial is not set
 # CONFIG_PACKAGE_kmod-usb-serial-ark3116 is not set
 # CONFIG_PACKAGE_kmod-usb-serial-belkin is not set
@@ -5181,7 +5181,7 @@ CONFIG_PACKAGE_luci-newapi=y
 # CONFIG_PACKAGE_luci-app-adblock is not set
 # CONFIG_PACKAGE_luci-app-adbyby-plus is not set
 CONFIG_PACKAGE_luci-app-adguardhome=y
-CONFIG_PACKAGE_luci-app-advanced-reboot=y
+# CONFIG_PACKAGE_luci-app-advanced-reboot is not set
 # CONFIG_PACKAGE_luci-app-ahcp is not set
 # CONFIG_PACKAGE_luci-app-airplay2 is not set
 CONFIG_PACKAGE_luci-app-aliddns=m
@@ -5193,7 +5193,7 @@ CONFIG_PACKAGE_luci-app-aria2=y
 CONFIG_PACKAGE_luci-app-arpbind=y
 # CONFIG_PACKAGE_luci-app-asterisk is not set
 # CONFIG_PACKAGE_luci-app-attendedsysupgrade is not set
-CONFIG_PACKAGE_luci-app-autoreboot=y
+CONFIG_PACKAGE_luci-app-autoreboot=m
 CONFIG_PACKAGE_luci-app-baidupcs-web=m
 # CONFIG_PACKAGE_luci-app-bcp38 is not set
 # CONFIG_PACKAGE_luci-app-beamInDocker is not set
@@ -5382,7 +5382,7 @@ CONFIG_PACKAGE_luci-app-unblockmusic_INCLUDE_UnblockNeteaseMusic_Go=y
 # CONFIG_PACKAGE_luci-app-unblockmusic_INCLUDE_UnblockNeteaseMusic_NodeJS is not set
 # CONFIG_PACKAGE_luci-app-unbound is not set
 CONFIG_PACKAGE_luci-app-upnp=y
-# CONFIG_PACKAGE_luci-app-usb-printer is not set
+CONFIG_PACKAGE_luci-app-usb-printer=m
 CONFIG_PACKAGE_luci-app-uugamebooster=m
 # CONFIG_PACKAGE_luci-app-v2ray-server is not set
 # CONFIG_PACKAGE_luci-app-verysync is not set
@@ -5455,11 +5455,6 @@ CONFIG_PACKAGE_luci-lib-nixio_openssl=y
 # end of 6. Libraries
 
 CONFIG_PACKAGE_default-settings=y
-# CONFIG_PACKAGE_luci-i18n-advanced-reboot-es is not set
-# CONFIG_PACKAGE_luci-i18n-advanced-reboot-ru is not set
-# CONFIG_PACKAGE_luci-i18n-advanced-reboot-sv is not set
-CONFIG_PACKAGE_luci-i18n-advanced-reboot-zh-cn=y
-# CONFIG_PACKAGE_luci-i18n-advanced-reboot-zh-tw is not set
 CONFIG_PACKAGE_luci-i18n-aliyundrive-webdav-zh-cn=m
 # CONFIG_PACKAGE_luci-i18n-aliyundrive-webdav-zh_Hans is not set
 # CONFIG_PACKAGE_luci-i18n-aria2-pt-br is not set
@@ -5468,7 +5463,7 @@ CONFIG_PACKAGE_luci-i18n-aliyundrive-webdav-zh-cn=m
 CONFIG_PACKAGE_luci-i18n-aria2-zh-cn=y
 # CONFIG_PACKAGE_luci-i18n-aria2-zh-tw is not set
 CONFIG_PACKAGE_luci-i18n-arpbind-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-autoreboot-zh-cn=y
+CONFIG_PACKAGE_luci-i18n-autoreboot-zh-cn=m
 # CONFIG_PACKAGE_luci-i18n-base-ca is not set
 # CONFIG_PACKAGE_luci-i18n-base-cs is not set
 # CONFIG_PACKAGE_luci-i18n-base-de is not set
@@ -5750,6 +5745,7 @@ CONFIG_PACKAGE_luci-i18n-udpxy-zh-cn=m
 # CONFIG_PACKAGE_luci-i18n-upnp-vi is not set
 CONFIG_PACKAGE_luci-i18n-upnp-zh-cn=y
 # CONFIG_PACKAGE_luci-i18n-upnp-zh-tw is not set
+CONFIG_PACKAGE_luci-i18n-usb-printer-zh-cn=m
 CONFIG_PACKAGE_luci-i18n-uugamebooster-zh-cn=m
 CONFIG_PACKAGE_luci-i18n-vlmcsd-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-vsftpd-zh-cn=y
@@ -6309,7 +6305,7 @@ CONFIG_PACKAGE_wsdd2=y
 #
 # Printing
 #
-# CONFIG_PACKAGE_p910nd is not set
+CONFIG_PACKAGE_p910nd=m
 # end of Printing
 
 #
