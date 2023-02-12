@@ -14,6 +14,7 @@
 [![Issue Welcome][5]][6]
 [![Release Version][7]][8]
 [![Contact Me][10]][11]
+![visitors](https://visitor-badge.glitch.me/badge?page_id=xiaoqingfengATGH.homelede.visitor&left_color=green&right_color=red)
 
 [固件使用说明](https://github.com/xiaoqingfengATGH/HomeLede/wiki)
 
