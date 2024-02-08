@@ -73,12 +73,13 @@
 ```bash
    sudo apt update -y
    sudo apt full-upgrade -y
-   sudo apt install -y ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential \
+   sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \
    bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \
-   git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev \
-   libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz \
-   mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pip libpython3-dev qemu-utils \
-   rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
+   git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libfuse-dev libglib2.0-dev libgmp3-dev \
+   libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libpython3-dev libreadline-dev \
+   libssl-dev libtool lrzsz mkisofs msmtp ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 \
+   python3-pyelftools python3-setuptools qemu-utils rsync scons squashfs-tools subversion swig texinfo \
+   uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
 ```
 3. `git clone https://github.com/xiaoqingfengATGH/HomeLede.git HomeLede`命令下载好源代码，然后 `cd HomeLede` 进入目录
 
@@ -111,6 +112,23 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin make -j$(($(np
 macOS 原生系统进行编译：
 ------
 1.在 AppStore 中安装 Xcode
+
+由于默认情况下，装载到 WSL 发行版的 NTFS 格式的驱动器将不区分大小写，因此大概率在 WSL/WSL2 的编译检查中会返回以下错误：
+
+```txt
+Build dependency: OpenWrt can only be built on a case-sensitive filesystem
+```
+
+一个比较简洁的解决方法是，在 `git clone` 前先创建 Repository 目录，并为其启用大小写敏感：
+
+```powershell
+# 以管理员身份打开终端
+PS > fsutil.exe file setCaseSensitiveInfo <your_local_lede_path> enable
+# 将本项目 git clone 到开启了大小写敏感的目录 <your_local_lede_path> 中
+PS > git clone git@github.com:coolsnowwolf/lede.git <your_local_lede_path>
+```
+
+> 对已经 `git clone` 完成的项目目录执行 `fsutil.exe` 命令无法生效，大小写敏感只对新增的文件变更有效。
 
 ### macOS 原生系统进行编译
 
@@ -156,4 +174,4 @@ macOS 原生系统进行编译：
 
 ## Stargazers over time
 
-[![Stargazers over time](https://starchart.cc/xiaoqingfengATGH/HomeLede.svg)](https://starchart.cc/xiaoqingfengATGH/HomeLede)
+ ![star](doc/star.png)

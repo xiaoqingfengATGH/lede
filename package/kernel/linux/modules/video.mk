@@ -57,18 +57,21 @@ $(eval $(call KernelPackage,backlight-pwm))
 define KernelPackage/acpi-video
   SUBMENU:=$(VIDEO_MENU)
   TITLE:=ACPI Extensions For Display Adapters
-  DEPENDS:=@TARGET_x86 +kmod-backlight
+  DEPENDS:=@TARGET_x86||TARGET_loongarch64||TARGET_phytium +kmod-backlight
   HIDDEN:=1
-  KCONFIG:= \
-	CONFIG_ACPI_WMI \
-	CONFIG_ACPI_VIDEO
-  FILES:=$(LINUX_DIR)/drivers/acpi/video.ko \
-	$(LINUX_DIR)/drivers/platform/x86/wmi.ko
-  AUTOLOAD:=$(call AutoProbe,wmi video)
+  KCONFIG:=CONFIG_ACPI_VIDEO
+  FILES:=$(LINUX_DIR)/drivers/acpi/video.ko
+  AUTOLOAD:=$(call AutoProbe,video)
 endef
 
 define KernelPackage/acpi-video/description
  Kernel support for integrated graphics devices
+endef
+
+define KernelPackage/acpi-video/x86
+  KCONFIG+=CONFIG_ACPI_WMI
+  FILES+=$(LINUX_DIR)/drivers/platform/x86/wmi.ko
+  AUTOLOAD:=$(call AutoProbe,wmi video)
 endef
 
 $(eval $(call KernelPackage,acpi-video))
@@ -85,7 +88,6 @@ define KernelPackage/fb
 	CONFIG_FRAMEBUFFER_CONSOLE=y \
 	CONFIG_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY=y \
 	CONFIG_FRAMEBUFFER_CONSOLE_ROTATION=y \
-	CONFIG_FRAMEBUFFER_CONSOLE_LEGACY_ACCELERATION=y \
 	CONFIG_FONTS=y \
 	CONFIG_FONT_8x8=y \
 	CONFIG_FONT_8x16=y \
@@ -241,6 +243,24 @@ endef
 
 $(eval $(call KernelPackage,fb-tft-ili9486))
 
+define KernelPackage/media-core
+  SUBMENU:=$(VIDEO_MENU)
+  TITLE=Multimedia support
+  HIDDEN:=1
+  KCONFIG:= \
+	CONFIG_MEDIA_SUPPORT \
+	CONFIG_MEDIA_CONTROLLER=y \
+	CONFIG_MEDIA_CAMERA_SUPPORT=y
+  FILES:=$(LINUX_DIR)/drivers/media/mc/mc.ko
+  AUTOLOAD:=$(call AutoProbe,mc)
+endef
+
+define KernelPackage/media-core/description
+  Kernel modules for media controller support
+endef
+
+$(eval $(call KernelPackage,media-core))
+
 define KernelPackage/multimedia-input
   SUBMENU:=$(VIDEO_MENU)
   TITLE:=Multimedia input support
@@ -264,16 +284,19 @@ define KernelPackage/drm
   TITLE:=Direct Rendering Manager (DRM) support
   HIDDEN:=1
   DEPENDS:=+kmod-dma-buf +kmod-i2c-core +kmod-backlight \
-	+(LINUX_5_15||LINUX_6_1):kmod-fb
-  KCONFIG:=	\
-	CONFIG_DRM \
+	+(LINUX_5_15||LINUX_6_1||LINUX_6_6):kmod-fb
+  KCONFIG:=CONFIG_DRM \
+	CONFIG_DRM_EXEC@ge6.6 \
+	CONFIG_DRM_SUBALLOC_HELPER@ge6.4
 	CONFIG_DRM_FBDEV_EMULATION=y \
 	CONFIG_DRM_FBDEV_OVERALLOC=100 \
 	CONFIG_DRM_PANEL_ORIENTATION_QUIRKS=y
   FILES:= \
 	$(LINUX_DIR)/drivers/gpu/drm/drm.ko \
-	$(LINUX_DIR)/drivers/gpu/drm/drm_panel_orientation_quirks.ko
-  AUTOLOAD:=$(call AutoLoad,05,drm)
+	$(LINUX_DIR)/drivers/gpu/drm/drm_panel_orientation_quirks.ko \
+	$(LINUX_DIR)/drivers/gpu/drm/drm_exec.ko@ge6.6 \
+	$(LINUX_DIR)/drivers/gpu/drm/drm_suballoc_helper.ko@ge6.4
+  AUTOLOAD:=$(call AutoLoad,05,drm_exec@ge6.6 drm_suballoc_helper@ge6.4 drm)
 endef
 
 define KernelPackage/drm/description
@@ -285,10 +308,14 @@ $(eval $(call KernelPackage,drm))
 define KernelPackage/drm-buddy
   SUBMENU:=$(VIDEO_MENU)
   TITLE:=A page based buddy allocator
-  DEPENDS:=@TARGET_x86 @DISPLAY_SUPPORT +kmod-drm @LINUX_6_1
+  DEPENDS:=@DISPLAY_SUPPORT +kmod-drm @LINUX_6_1||LINUX_6_6
   KCONFIG:=CONFIG_DRM_BUDDY
   FILES:= $(LINUX_DIR)/drivers/gpu/drm/drm_buddy.ko
   AUTOLOAD:=$(call AutoProbe,drm_buddy)
+endef
+
+define KernelPackage/drm-buddy/description
+  A page based buddy allocator
 endef
 
 $(eval $(call KernelPackage,drm-buddy))
@@ -308,6 +335,20 @@ define KernelPackage/drm-ttm/description
 endef
 
 $(eval $(call KernelPackage,drm-ttm))
+
+
+define KernelPackage/drm-ttm-helper
+  SUBMENU:=$(VIDEO_MENU)
+  TITLE:=Helpers for ttm-based gem objects
+  HIDDEN:=1
+  DEPENDS:=@DISPLAY_SUPPORT +kmod-drm-ttm
+  KCONFIG:=CONFIG_DRM_TTM_HELPER
+  FILES:=$(LINUX_DIR)/drivers/gpu/drm/drm_ttm_helper.ko
+  AUTOLOAD:=$(call AutoProbe,drm_ttm_helper)
+endef
+
+$(eval $(call KernelPackage,drm-ttm-helper))
+
 
 define KernelPackage/drm-kms-helper
   SUBMENU:=$(VIDEO_MENU)
@@ -330,7 +371,7 @@ $(eval $(call KernelPackage,drm-kms-helper))
 define KernelPackage/drm-display-helper
   SUBMENU:=$(VIDEO_MENU)
   TITLE:=DRM helpers for display adapters drivers
-  DEPENDS:=@DISPLAY_SUPPORT +kmod-drm +TARGET_x86:kmod-drm-buddy @LINUX_6_1
+  DEPENDS:=@DISPLAY_SUPPORT +kmod-drm +(TARGET_x86||TARGET_loongarch64):kmod-drm-buddy @LINUX_6_1||LINUX_6_6
   KCONFIG:=CONFIG_DRM_DISPLAY_HELPER
   FILES:=$(LINUX_DIR)/drivers/gpu/drm/display/drm_display_helper.ko
   AUTOLOAD:=$(call AutoProbe,drm_display_helper)
@@ -345,21 +386,31 @@ $(eval $(call KernelPackage,drm-display-helper))
 define KernelPackage/drm-amdgpu
   SUBMENU:=$(VIDEO_MENU)
   TITLE:=AMDGPU DRM support
-  DEPENDS:=@TARGET_x86 @DISPLAY_SUPPORT +kmod-backlight +kmod-drm-ttm \
-	+kmod-drm-kms-helper +kmod-i2c-algo-bit +amdgpu-firmware \
-	+LINUX_6_1:kmod-drm-display-helper +LINUX_6_1:kmod-acpi-video
+  DEPENDS:=@TARGET_x86||TARGET_loongarch64||TARGET_phytium @DISPLAY_SUPPORT +kmod-backlight +kmod-drm-ttm \
+	+kmod-drm-ttm-helper +kmod-drm-kms-helper +kmod-i2c-algo-bit +amdgpu-firmware \
+	+kmod-drm-display-helper +kmod-drm-buddy +kmod-acpi-video
   KCONFIG:=CONFIG_DRM_AMDGPU \
 	CONFIG_DRM_AMDGPU_SI=y \
 	CONFIG_DRM_AMDGPU_CIK=y \
 	CONFIG_DRM_AMD_DC=y \
 	CONFIG_DEBUG_KERNEL_DC=n
   FILES:=$(LINUX_DIR)/drivers/gpu/drm/amd/amdgpu/amdgpu.ko \
+  $(LINUX_DIR)/drivers/gpu/drm/amd/amdxcp/amdxcp.ko@ge6.5 \
 	$(LINUX_DIR)/drivers/gpu/drm/scheduler/gpu-sched.ko
   AUTOLOAD:=$(call AutoProbe,amdgpu)
 endef
 
 define KernelPackage/drm-amdgpu/description
   Direct Rendering Manager (DRM) support for AMDGPU Cards
+endef
+
+define KernelPackage/drm-amdgpu/loongarch64
+  KCONFIG+=CONFIG_DRM_AMDGPU_USERPTR=y \
+	CONFIG_DRM_AMD_DC=y \
+	CONFIG_DRM_AMD_DC_FP=y \
+	CONFIG_DRM_AMD_DC_SI=y
+  FILES+=$(LINUX_DIR)/drivers/gpu/drm/amd/amdxcp/amdxcp.ko
+  AUTOLOAD:=$(call AutoProbe,amdxcp amdgpu)
 endef
 
 $(eval $(call KernelPackage,drm-amdgpu))
@@ -370,6 +421,8 @@ define KernelPackage/drm-imx
   TITLE:=Freescale i.MX DRM support
   DEPENDS:=@TARGET_imx +kmod-drm-kms-helper
   KCONFIG:=CONFIG_DRM_IMX \
+	CONFIG_DRM_FBDEV_EMULATION=y \
+	CONFIG_DRM_FBDEV_OVERALLOC=100 \
 	CONFIG_IMX_IPUV3_CORE \
 	CONFIG_RESET_CONTROLLER=y \
 	CONFIG_DRM_IMX_IPUV3 \
@@ -428,7 +481,8 @@ define KernelPackage/drm-imx-ldb
 	CONFIG_DRM_PANEL_S6E8AA0=n \
 	CONFIG_DRM_PANEL_SITRONIX_ST7789V=n
   FILES:=$(LINUX_DIR)/drivers/gpu/drm/imx/imx-ldb.ko \
-	$(LINUX_DIR)/drivers/gpu/drm/panel/panel-simple.ko
+	$(LINUX_DIR)/drivers/gpu/drm/panel/panel-simple.ko \
+	$(LINUX_DIR)/drivers/gpu/drm/drm_dp_aux_bus.ko@gt5.10
   AUTOLOAD:=$(call AutoLoad,08,imx-ldb)
 endef
 
@@ -438,11 +492,42 @@ endef
 
 $(eval $(call KernelPackage,drm-imx-ldb))
 
+define KernelPackage/drm-lima
+  SUBMENU:=$(VIDEO_MENU)
+  TITLE:=DRM support for ARM Mali 400/450 GPU
+  DEPENDS:=@(TARGET_rockchip||TARGET_sunxi) +kmod-drm-sched
+  KCONFIG:=CONFIG_DRM_LIMA
+  FILES:=$(LINUX_DIR)/drivers/gpu/drm/lima/lima.ko
+  AUTOLOAD:=$(call AutoProbe,lima)
+endef
+
+define KernelPackage/drm-lima/description
+  DRM driver for ARM Mali 400/450 GPUs
+endef
+
+$(eval $(call KernelPackage,drm-lima))
+
+define KernelPackage/drm-panfrost
+  SUBMENU:=$(VIDEO_MENU)
+  TITLE:=DRM support for ARM Mali Midgard/Bifrost GPUs
+  DEPENDS:=@(TARGET_rockchip||TARGET_sunxi) +kmod-drm-sched
+  KCONFIG:=CONFIG_DRM_PANFROST
+  FILES:=$(LINUX_DIR)/drivers/gpu/drm/panfrost/panfrost.ko
+  AUTOLOAD:=$(call AutoProbe,panfrost)
+endef
+
+define KernelPackage/drm-panfrost/description
+  DRM driver for ARM Mali Midgard (T6xx, T7xx, T8xx) and
+  Bifrost (G3x, G5x, G7x) GPUs
+endef
+
+$(eval $(call KernelPackage,drm-panfrost))
+
 define KernelPackage/drm-radeon
   SUBMENU:=$(VIDEO_MENU)
   TITLE:=Radeon DRM support
-  DEPENDS:=@TARGET_x86 @DISPLAY_SUPPORT +kmod-backlight +kmod-drm-kms-helper \
-	+kmod-drm-ttm +kmod-i2c-algo-bit +LINUX_6_1:kmod-acpi-video +radeon-firmware
+  DEPENDS:=@TARGET_x86||TARGET_phytium @DISPLAY_SUPPORT +kmod-backlight +kmod-drm-kms-helper \
+	+kmod-drm-ttm +kmod-i2c-algo-bit +(LINUX_6_1||LINUX_6_6):kmod-acpi-video +radeon-firmware
   KCONFIG:=CONFIG_DRM_RADEON
   FILES:=$(LINUX_DIR)/drivers/gpu/drm/radeon/radeon.ko
   AUTOLOAD:=$(call AutoProbe,radeon)
@@ -454,10 +539,24 @@ endef
 
 $(eval $(call KernelPackage,drm-radeon))
 
+define KernelPackage/drm-sched
+  SUBMENU:=$(VIDEO_MENU)
+  TITLE:=DRM helper for ARM GPUs
+  DEPENDS:=+kmod-drm
+  HIDDEN:=1
+  KCONFIG:=CONFIG_DRM_SCHED
+  FILES:= \
+	$(LINUX_DIR)/drivers/gpu/drm/drm_shmem_helper.ko@gt5.17 \
+	$(LINUX_DIR)/drivers/gpu/drm/scheduler/gpu-sched.ko
+  AUTOLOAD:=$(call AutoProbe,gpu-sched)
+endef
+
+$(eval $(call KernelPackage,drm-sched))
+
 define KernelPackage/drm-nouveau
   SUBMENU:=$(VIDEO_MENU)
   TITLE:=nouveau DRM support
-  DEPENDS:=@TARGET_x86 @DISPLAY_SUPPORT +kmod-drm-kms-helper +LINUX_6_1:kmod-acpi-video
+  DEPENDS:=@TARGET_x86 @DISPLAY_SUPPORT +kmod-drm-kms-helper +(LINUX_6_1||LINUX_6_6):kmod-acpi-video
   KCONFIG:=CONFIG_DRM_NOUVEAU \
 	NOUVEAU_DEBUG=5 \
 	NOUVEAU_DEBUG_DEFAULT=3 \
@@ -480,10 +579,9 @@ $(eval $(call KernelPackage,drm-nouveau))
 define KernelPackage/video-core
   SUBMENU:=$(VIDEO_MENU)
   TITLE=Video4Linux support
-  DEPENDS:=+PACKAGE_kmod-i2c-core:kmod-i2c-core
+  DEPENDS:=+PACKAGE_kmod-i2c-core:kmod-i2c-core \
+	+LINUX_6_1||LINUX_6_6:kmod-media-core
   KCONFIG:= \
-	CONFIG_MEDIA_SUPPORT \
-	CONFIG_MEDIA_CAMERA_SUPPORT=y \
 	CONFIG_VIDEO_DEV \
 	CONFIG_V4L_PLATFORM_DRIVERS=y
   FILES:= \
@@ -570,9 +668,10 @@ $(eval $(call KernelPackage,video-pwc))
 define KernelPackage/video-uvc
   TITLE:=USB Video Class (UVC) support
   DEPENDS:=@USB_SUPPORT +kmod-usb-core +kmod-video-videobuf2 +kmod-input-core
-  KCONFIG:= CONFIG_USB_VIDEO_CLASS
-  FILES:=$(LINUX_DIR)/drivers/media/$(V4L2_USB_DIR)/uvc/uvcvideo.ko
-  AUTOLOAD:=$(call AutoProbe,uvcvideo)
+  KCONFIG:= CONFIG_USB_VIDEO_CLASS CONFIG_UVC_COMMON@ge6.3
+  FILES:=$(LINUX_DIR)/drivers/media/$(V4L2_USB_DIR)/uvc/uvcvideo.ko \
+	$(LINUX_DIR)/drivers/media/common/uvc.ko@ge6.3
+  AUTOLOAD:=$(call AutoProbe,uvc@ge6.3 uvcvideo)
   $(call AddDepends/camera)
 endef
 
@@ -1120,7 +1219,7 @@ define KernelPackage/drm-i915
   SUBMENU:=$(VIDEO_MENU)
   TITLE:=Intel GPU drm support
   DEPENDS:=@TARGET_x86 +kmod-drm-ttm +kmod-drm-kms-helper +i915-firmware \
-	+LINUX_6_1:kmod-drm-display-helper +LINUX_6_1:kmod-acpi-video
+	+(LINUX_6_1||LINUX_6_6):kmod-drm-display-helper +(LINUX_6_1||LINUX_6_6):kmod-acpi-video
   KCONFIG:= \
 	CONFIG_INTEL_GTT \
 	CONFIG_DRM_I915 \

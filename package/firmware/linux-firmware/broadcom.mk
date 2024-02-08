@@ -1,3 +1,16 @@
+Package/brcmfmac-firmware-4339-sdio = $(call Package/firmware-default,Broadcom 4339 FullMAC SDIO firmware)
+define Package/brcmfmac-firmware-4339-sdio/install
+	$(INSTALL_DIR) $(1)/lib/firmware/cypress
+	$(INSTALL_DATA) \
+		$(PKG_BUILD_DIR)/cypress/cyfmac4339-sdio.bin \
+		$(1)/lib/firmware/cypress/
+	$(INSTALL_DIR) $(1)/lib/firmware/brcm
+	$(LN) \
+		../cypress/cyfmac4339-sdio.bin \
+		$(1)/lib/firmware/brcm/brcmfmac4339-sdio.bin
+endef
+$(eval $(call BuildPackage,brcmfmac-firmware-4339-sdio))
+
 Package/brcmfmac-firmware-43602a1-pcie = $(call Package/firmware-default,Broadcom 43602a1 FullMAC PCIe firmware)
 define Package/brcmfmac-firmware-43602a1-pcie/install
 	$(INSTALL_DIR) $(1)/lib/firmware/brcm
@@ -128,3 +141,19 @@ define Package/station-p2-firmware/install
 	$(INSTALL_DATA) ./brcm_firmware/ap6275s/nvram_ap6275s.txt $(1)/lib/firmware/brcm/brcmfmac43752-sdio.firefly,rk3568-roc-pc.txt
 endef
 $(eval $(call BuildPackage,station-p2-firmware))
+
+Package/rongpin-king3399-firmware = $(call Package/firmware-default,Broadcom FullMac SDIO firmware)
+define Package/rongpin-king3399-firmware/install
+	$(INSTALL_DIR) $(1)/lib/firmware/brcm
+	$(INSTALL_DATA) ./brcm_firmware/ap6356s/brcmfmac4356-sdio.rongpin,king3399.bin $(1)/lib/firmware/brcm/brcmfmac4356-sdio.rongpin,king3399.bin
+	$(INSTALL_DATA) ./brcm_firmware/ap6356s/brcmfmac4356-sdio.rongpin,king3399.txt $(1)/lib/firmware/brcm/brcmfmac4356-sdio.rongpin,king3399.txt
+endef
+$(eval $(call BuildPackage,rongpin-king3399-firmware))
+
+Package/panther-x2-firmware = $(call Package/firmware-default,Broadcom FullMac SDIO firmware)
+define Package/panther-x2-firmware/install
+	$(INSTALL_DIR) $(1)/lib/firmware/brcm
+	$(INSTALL_DATA) ./brcm_firmware/ap6236/brcmfmac43430-sdio.bin $(1)/lib/firmware/brcm/brcmfmac43430-sdio.bin
+	$(INSTALL_DATA) ./brcm_firmware/ap6236/brcmfmac43430-sdio.txt $(1)/lib/firmware/brcm/brcmfmac43430-sdio.txt
+endef
+$(eval $(call BuildPackage,panther-x2-firmware))

@@ -405,6 +405,7 @@ define Device/Init
   BOARD_NAME :=
   UIMAGE_MAGIC :=
   UIMAGE_NAME :=
+  UIMAGE_TIME :=
   DEVICE_COMPAT_VERSION := 1.0
   DEVICE_COMPAT_MESSAGE :=
   SUPPORTED_DEVICES := $(subst _,$(comma),$(1))
@@ -425,7 +426,7 @@ DEFAULT_DEVICE_VARS := \
   DEVICE_DTS_CONFIG DEVICE_DTS_DELIMITER DEVICE_DTS_DIR DEVICE_DTS_OVERLAY \
   DEVICE_DTS_LOADADDR \
   DEVICE_FDT_NUM DEVICE_IMG_PREFIX SOC BOARD_NAME UIMAGE_MAGIC UIMAGE_NAME \
-  SUPPORTED_DEVICES IMAGE_METADATA KERNEL_ENTRY KERNEL_LOADADDR \
+  UIMAGE_TIME SUPPORTED_DEVICES IMAGE_METADATA KERNEL_ENTRY KERNEL_LOADADDR \
   UBOOT_PATH IMAGE_SIZE \
   FACTORY_IMG_NAME FACTORY_SIZE \
   DEVICE_PACKAGES DEVICE_COMPAT_VERSION DEVICE_COMPAT_MESSAGE \
@@ -554,13 +555,30 @@ define Device/Build/dtb
   endif
 
 endef
+
+define Device/Build/dtbo
+  ifndef BUILD_DTS_$(1)
+  BUILD_DTS_$(1) := 1
+  $(KDIR)/image-$(1).dtbo: FORCE
+	$(call Image/BuildDTB,$(strip $(2))/$(strip $(3)).dtso,$$@)
+
+  image_prepare: $(KDIR)/image-$(1).dtbo
+  endif
+
+endef
 endif
 
 define Device/Build/kernel
-  $$(eval $$(foreach dts,$$(DEVICE_DTS) $$(DEVICE_DTS_OVERLAY), \
+  $$(eval $$(foreach dts,$$(DEVICE_DTS), \
 	$$(call Device/Build/dtb,$$(notdir $$(dts)), \
 		$$(if $$(DEVICE_DTS_DIR),$$(DEVICE_DTS_DIR),$$(DTS_DIR)), \
 		$$(dts) \
+	) \
+  ))
+  $$(eval $$(foreach dtso,$$(DEVICE_DTS_OVERLAY), \
+	$$(call Device/Build/dtbo,$$(notdir $$(dtso)), \
+		$$(if $$(DEVICE_DTS_DIR),$$(DEVICE_DTS_DIR),$$(DTS_DIR)), \
+		$$(dtso) \
 	) \
   ))
 

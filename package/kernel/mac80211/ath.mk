@@ -98,7 +98,7 @@ define KernelPackage/ath/config
 		bool "Atheros wireless debugging"
 		help
 		  Say Y, if you want to debug atheros wireless drivers.
-		  Only ath9k & ath10k make use of this.
+		  Only ath9k & ath10k & ath11k make use of this.
 
 	config PACKAGE_ATH_DFS
 		bool "Enable DFS support"
@@ -225,7 +225,7 @@ define KernelPackage/ath9k/config
 		bool "Add wireless noise as source of randomness to kernel entropy pool"
 		depends on PACKAGE_kmod-ath9k
 		select PACKAGE_kmod-random-core
-		default n
+		default y
 
 	config ATH9K_SUPPORT_PCOEM
 		bool "Support chips used in PC OEM cards"
@@ -305,6 +305,7 @@ define KernelPackage/ath11k
   +kmod-crypto-michael-mic +ATH11K_THERMAL:kmod-hwmon-core +ATH11K_THERMAL:kmod-thermal
   FILES:=$(PKG_BUILD_DIR)/drivers/soc/qcom/qmi_helpers.ko \
   $(PKG_BUILD_DIR)/drivers/net/wireless/ath/ath11k/ath11k.ko
+  MODPARAMS.ath11k:=frame_mode=2
 endef
 
 define KernelPackage/ath11k/description
@@ -317,7 +318,7 @@ define KernelPackage/ath11k/config
        config ATH11K_THERMAL
                bool "Enable thermal sensors and throttling support"
                depends on PACKAGE_kmod-ath11k
-               default y if TARGET_ipq807x
+               default y if TARGET_qualcommax
 
 endef
 
@@ -325,7 +326,7 @@ define KernelPackage/ath11k-ahb
   $(call KernelPackage/mac80211/Default)
   TITLE:=Qualcomm 802.11ax AHB wireless chipset support
   URL:=https://wireless.wiki.kernel.org/en/users/drivers/ath11k
-  DEPENDS+= @TARGET_ipq807x +kmod-ath11k +kmod-qrtr-smd
+  DEPENDS+= @TARGET_qualcommax +kmod-ath11k +kmod-qrtr-smd
   FILES:=$(PKG_BUILD_DIR)/drivers/net/wireless/ath/ath11k/ath11k_ahb.ko
   AUTOLOAD:=$(call AutoProbe,ath11k_ahb)
 endef
