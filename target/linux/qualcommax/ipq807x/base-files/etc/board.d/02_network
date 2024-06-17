@@ -46,6 +46,9 @@ ipq807x_setup_interfaces()
 	prpl,haze)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
 		;;
+	tplink,tl-er2260t)
+		ucidef_set_interfaces_lan_wan "eth0 eth1 eth2 eth3 eth5" "eth4"
+		;;
 	qnap,301w)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3 lan4 10g-2" "10g-1"
 		;;

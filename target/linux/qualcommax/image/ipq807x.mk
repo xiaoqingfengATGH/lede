@@ -219,6 +219,20 @@ define Device/redmi_ax6
 endef
 TARGET_DEVICES += redmi_ax6
 
+define Device/tplink_tl-er2260t
+	$(call Device/FitImage)
+	$(call Device/UbiFit)
+	DEVICE_VENDOR := TPLINK
+	DEVICE_MODEL := TL-ER2260T
+	SOC := ipq8070
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	DEVICE_DTS_CONFIG := config@hk07
+	BOARD_NAME := tplink,tl-er2260t
+	DEVICE_PACKAGES += -kmod-ath11k-ahb -wpad-openssl kmod-i2c-gpio kmod-sfp
+endef
+TARGET_DEVICES += tplink_tl-er2260t
+
 define Device/xiaomi_ax3600
 	$(call Device/FitImage)
 	$(call Device/UbiFit)
