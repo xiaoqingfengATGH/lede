@@ -89,6 +89,18 @@ endef
 
 $(eval $(call KernelPackage,ata-artop))
 
+define KernelPackage/ata-ahci-dwc
+  TITLE:=Synopsys DWC AHCI SATA
+  KCONFIG:= \
+	CONFIG_AHCI_DWC \
+	CONFIG_SATA_HOST=y
+  FILES:=$(LINUX_DIR)/drivers/ata/ahci_dwc.ko
+  DEPENDS:=+kmod-ata-ahci-platform
+  AUTOLOAD:=$(call AutoLoad,41,ahci_dwc,1)
+  $(call AddDepends/ata,@TARGET_rockchip)
+endef
+
+$(eval $(call KernelPackage,ata-ahci-dwc))
 
 define KernelPackage/ata-nvidia-sata
   TITLE:=Nvidia Serial ATA support
@@ -263,7 +275,7 @@ define KernelPackage/iscsi-initiator
 	CONFIG_INET \
 	CONFIG_SCSI_LOWLEVEL=y \
 	CONFIG_ISCSI_TCP \
-	CONFIG_SCSI_ISCSI_ATTRS=y
+	CONFIG_SCSI_ISCSI_ATTRS
   FILES:= \
 	$(LINUX_DIR)/drivers/scsi/iscsi_tcp.ko \
 	$(LINUX_DIR)/drivers/scsi/libiscsi.ko \
@@ -505,7 +517,7 @@ define KernelPackage/nvme
   FILES:= \
 	$(LINUX_DIR)/drivers/nvme/host/nvme-core.ko \
 	$(LINUX_DIR)/drivers/nvme/host/nvme.ko
-  AUTOLOAD:=$(call AutoLoad,30,nvme-core nvme)
+  AUTOLOAD:=$(call AutoLoad,30,nvme-core nvme,1)
 endef
 
 define KernelPackage/nvme/description
