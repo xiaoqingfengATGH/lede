@@ -21,30 +21,19 @@ DEFAULT_PACKAGES += partx-utils mkf2fs e2fsprogs kmod-button-hotplug kmod-usb-hi
 kmod-alx kmod-e1000e kmod-igb kmod-igc kmod-igbvf kmod-iavf kmod-bnx2x kmod-pcnet32 kmod-tulip kmod-via-velocity kmod-vmxnet3 kmod-i40e kmod-i40evf \
 kmod-sound-hda-core kmod-sound-hda-codec-realtek kmod-sound-hda-codec-via kmod-sound-via82xx kmod-sound-hda-intel kmod-sound-hda-codec-hdmi kmod-sound-i8x0 \
 kmod-usb-net kmod-usb-net-asix-ax88179 kmod-usb-net-rtl8150 kmod-usb-net-aqc111 kmod-mlx4-core kmod-mlx5-core kmod-drm-i915 kmod-drm-amdgpu kmod-usb-audio \
-kmod-usb-net-rtl8152-vendor kmod-r8125 kmod-r8126 kmod-r8168 kmod-8139cp kmod-8139too kmod-tg3 htop lm-sensors autocore-x86 automount autosamba ca-bundle
-
-# Home Lede default x86 packages
-DEFAULT_PACKAGES += partx-utils mkf2fs e2fsprogs kmod-button-hotplug kmod-usb-hid kmod-mmc kmod-sdhci kmod-fs-f2fs cfdisk usbutils pciutils \
-kmod-alx kmod-e1000e kmod-igb kmod-igc kmod-igbvf kmod-iavf kmod-bnx2x kmod-pcnet32 kmod-tulip kmod-via-velocity kmod-vmxnet3 kmod-i40e kmod-i40evf kmod-r8125 kmod-8139cp kmod-8139too kmod-tg3 kmod-ath5k kmod-ath9k kmod-ath9k-htc kmod-ath10k kmod-rt2800-usb kmod-igc kmod-ixgbe kmod-ixgbevf kmod-8139too kmod-fs-f2fs cfdisk \
-kmod-sound-hda-core kmod-sound-hda-codec-realtek kmod-sound-hda-codec-via kmod-sound-via82xx kmod-sound-hda-intel kmod-sound-hda-codec-hdmi kmod-sound-i8x0 kmod-usb-audio \
-kmod-usb-net kmod-usb-net-asix kmod-usb-net-asix-ax88179 kmod-usb-net-rtl8150 kmod-usb-net-rtl8152-vendor kmod-mlx4-core kmod-r8168 kmod-mlx4-core kmod-mlx5-core kmod-drm-amdgpu \
-ath10k-firmware-qca988x ath10k-firmware-qca9888 ath10k-firmware-qca9984 brcmfmac-firmware-43602a1-pcie \
-htop lm-sensors autocore-x86 automount autosamba luci-proto-bonding \
+kmod-usb-net-rtl8152-vendor kmod-r8125 kmod-r8126 kmod-r8168 kmod-8139cp kmod-8139too kmod-tg3 htop lm-sensors autocore-x86 automount autosamba ca-bundle \
 ddns-scripts_aliyun ddns-scripts_dnspod ca-certificates \
 homelede-autoconfig \
 dockerd docker open-vm-tools \
-bind-dig subweb unrar unzip dmesg p7zip \
-luci-app-aria2 \
+bind-dig unrar unzip dmesg p7zip \
 luci-theme-infinityfreedom luci-theme-argon-dark-mod luci-theme-netgear luci-theme-opentomato luci-theme-opentomcat \
 ipv6helper \
 luci-app-accesscontrol luci-app-control-timewol luci-app-control-webrestriction luci-app-control-weburl \
 luci-app-samba luci-app-cifs-mount  \
 luci-app-dockerman luci-app-hd-idle \
 luci-app-homeconnect luci-app-homeredirect \
-luci-app-adguardhome luci-app-chinadns-ng luci-app-smartdns \
 luci-app-mwan3 luci-app-syncdial \
-luci-app-ttyd luci-app-upnp luci-app-vlmcsd luci-app-vsftpd luci-app-watchcat luci-app-wireguard luci-app-wol luci-app-ramfree \
-luci-app-jd-dailybonus \
+luci-app-ttyd luci-app-upnp luci-app-vlmcsd luci-app-vsftpd luci-app-watchcat luci-app-wol luci-app-ramfree \
 ppp-mod-pppoa ppp-mod-pppoe ppp-mod-pppol2tp ppp-mod-pptp pppossh xl2tpd 
 
 $(eval $(call BuildTarget))

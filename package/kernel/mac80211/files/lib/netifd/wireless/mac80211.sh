@@ -140,8 +140,8 @@ mac80211_hostapd_setup_base() {
 	[ -n "$acs_exclude_dfs" ] && [ "$acs_exclude_dfs" -gt 0 ] &&
 		append base_cfg "acs_exclude_dfs=1" "$N"
 
-	json_get_vars noscan ht_coex min_tx_power:0 tx_burst
-	json_get_values ht_capab_list ht_capab
+	json_get_vars noscan ht_coex vendor_vht min_tx_power:0
+	json_get_values ht_capab_list ht_capab tx_burst
 	json_get_values channel_list channels
 
 	[ "$auto_channel" = 0 ] && [ -z "$channel_list" ] && \
@@ -293,7 +293,7 @@ mac80211_hostapd_setup_base() {
 	}
 	[ "$hwmode" = "a" ] || enable_ac=0
 
-	if [ "$enable_ac" != "0" ]; then
+	if [ "$enable_ac" != "0" -o "$vendor_vht" = "1" ]; then
 		json_get_vars \
 			rxldpc:1 \
 			short_gi_80:1 \
@@ -581,77 +581,15 @@ mac80211_generate_mac() {
 		$(( (0x$6 + $id) % 0x100 ))
 }
 
-get_board_phy_name() (
-	local path="$1"
-	local fallback_phy=""
-
-	__check_phy() {
-		local val="$1"
-		local key="$2"
-		local ref_path="$3"
-
-		json_select "$key"
-		json_get_values path
-		json_select ..
-
-		[ "${ref_path%+*}" = "$path" ] && fallback_phy=$key
-		[ "$ref_path" = "$path" ] || return 0
-
-		echo "$key"
-		exit
-	}
-
-	json_load_file /etc/board.json
-	json_for_each_item __check_phy wlan "$path"
-	[ -n "$fallback_phy" ] && echo "${fallback_phy}.${path##*+}"
-)
-
-rename_board_phy_by_path() {
-	local path="$1"
-
-	local new_phy="$(get_board_phy_name "$path")"
-	[ -z "$new_phy" -o "$new_phy" = "$phy" ] && return
-
-	iw "$phy" set name "$new_phy" && phy="$new_phy"
-}
-
-rename_board_phy_by_name() (
-	local phy="$1"
-	local suffix="${phy##*.}"
-	[ "$suffix" = "$phy" ] && suffix=
-
-	json_load_file /etc/board.json
-	json_select wlan
-	json_select "${phy%.*}" || return 0
-	json_get_values path
-
-	prev_phy="$(iwinfo nl80211 phyname "path=$path${suffix:++$suffix}")"
-	[ -n "$prev_phy" ] || return 0
-
-	[ "$prev_phy" = "$phy" ] && return 0
-
-	iw "$prev_phy" set name "$phy"
-)
-
 find_phy() {
-	[ -n "$phy" ] && {
-		rename_board_phy_by_name "$phy"
-		[ -d /sys/class/ieee80211/$phy ] && return 0
-	}
+	[ -n "$phy" -a -d /sys/class/ieee80211/$phy ] && return 0
 	[ -n "$path" ] && {
 		phy="$(iwinfo nl80211 phyname "path=$path")"
-		[ -n "$phy" ] && {
-			rename_board_phy_by_path "$path"
-			return 0
-		}
+		[ -n "$phy" ] && return 0
 	}
 	[ -n "$macaddr" ] && {
 		for phy in $(ls /sys/class/ieee80211 2>/dev/null); do
-			grep -i -q "$macaddr" "/sys/class/ieee80211/${phy}/macaddress" && {
-				path="$(iwinfo nl80211 path "$phy")"
-				rename_board_phy_by_path "$path"
-				return 0
-			}
+			grep -i -q "$macaddr" "/sys/class/ieee80211/${phy}/macaddress" && return 0
 		done
 	}
 	return 1
@@ -729,28 +667,13 @@ mac80211_iw_interface_add() {
 	return $rc
 }
 
-mac80211_set_ifname() {
-	local phy="$1"
-	local prefix="$2"
-	eval "ifname=\"$phy-$prefix\${idx_$prefix:-0}\"; idx_$prefix=\$((\${idx_$prefix:-0 } + 1))"
-}
-
 mac80211_prepare_vif() {
 	json_select config
 
 	json_get_vars ifname mode ssid wds powersave macaddr enable wpa_psk_file vlan_file
 
-	[ -n "$ifname" ] || {
-		local prefix;
-
-		case "$mode" in
-		ap|sta|mesh) prefix=$mode;;
-		adhoc) prefix=ibss;;
-		monitor) prefix=mon;;
-		esac
-
-		mac80211_set_ifname "$phy" "$prefix"
-	}
+	[ -n "$ifname" ] || ifname="wlan${phy#phy}${if_idx:+-$if_idx}"
+	if_idx=$((${if_idx:-0} + 1))
 
 	set_default wds 0
 	set_default powersave 0
@@ -1033,7 +956,7 @@ mac80211_setup_vif() {
 		mesh)
 			wireless_vif_parse_encryption
 			[ -z "$htmode" ] && htmode="NOHT";
-			if wpa_supplicant -vmesh || [ "$wpa" -gt 0 -o "$auto_channel" -gt 0 ] || chan_is_dfs "$phy" "$channel"; then
+			if [ "$wpa" -gt 0 -o "$auto_channel" -gt 0 ] || chan_is_dfs "$phy" "$channel"; then
 				mac80211_setup_supplicant $vif_enable || failed=1
 			else
 				mac80211_setup_mesh $vif_enable
