@@ -4,14 +4,14 @@ src-git routing https://github.com/coolsnowwolf/routing
 src-git telephony https://git.openwrt.org/feed/telephony.git
 src-git pw2luci https://github.com/xiaoqingfengATGH/feeds-lienol-pw2;main
 src-git pwPkgs https://github.com/xiaoqingfengATGH/feeds-lienol-pw-pkgs;main
-src-git xiaoqingfeng https://github.com/xiaoqingfengATGH/feeds-xiaoqingfeng
-src-git lienol https://github.com/homelede/openwrt-package.git;main
+#src-git xiaoqingfeng https://github.com/xiaoqingfengATGH/feeds-xiaoqingfeng
+#src-git lienol https://github.com/homelede/openwrt-package.git;main
 # luci-theme-infinityfreedom
 src-git infinityfreedom https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git
 # homeclash
-src-git homeclash https://github.com/xiaoqingfengATGH/homeclash.git
+#src-git homeclash https://github.com/xiaoqingfengATGH/homeclash.git
 # strongswanInDocker
-src-git strongswanInDocker https://github.com/xiaoqingfengATGH/luci-app-strongswanInDocker.git
+#src-git strongswanInDocker https://github.com/xiaoqingfengATGH/luci-app-strongswanInDocker.git
 
 #src-git video https://github.com/openwrt/video.git
 #src-git targets https://github.com/openwrt/targets.git
