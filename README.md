@@ -14,7 +14,6 @@
 [![Issue Welcome][5]][6]
 [![Release Version][7]][8]
 [![Contact Me][10]][11]
-![visitors](https://visitor-badge.glitch.me/badge?page_id=xiaoqingfengATGH.homelede.visitor&left_color=green&right_color=red)
 
 [固件使用说明](https://github.com/xiaoqingfengATGH/HomeLede/wiki)
 
@@ -165,6 +164,10 @@ PS > git clone git@github.com:coolsnowwolf/lede.git <your_local_lede_path>
 如需直接编译完成的固件，请访问Google网盘
 
 链接：https://drive.google.com/open?id=1iUDsgh1y5qouP48V61aTsswi3IekscKk
+
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/xiaoqingfengATGH/HomeLede.svg)](https://starchart.cc/xiaoqingfengATGH/HomeLede)
 
 ## 交流
 * [电报群](https://t.me/t_homelede)
