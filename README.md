@@ -14,7 +14,6 @@
 [![Issue Welcome][5]][6]
 [![Release Version][7]][8]
 [![Contact Me][10]][11]
-![visitors](https://visitor-badge.glitch.me/badge?page_id=xiaoqingfengATGH.homelede.visitor&left_color=green&right_color=red)
 
 [固件使用说明](https://github.com/xiaoqingfengATGH/HomeLede/wiki)
 
@@ -61,7 +60,7 @@
 ## 编译命令
 
 编译前：
-1. 首先装好 Ubuntu 64bit，推荐  Ubuntu 20 LTS x64
+1. 首先装好 Ubuntu 64bit，推荐  Ubuntu 24 LTS x64
 2. 至少30G空闲硬盘空间
 3. 2G以上内存，建议4G
 
@@ -71,15 +70,15 @@
 
 2. 安装编译依赖包，命令行输入
 ```bash
-   sudo apt update -y
-   sudo apt full-upgrade -y
-   sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \
-   bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \
-   git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libfuse-dev libglib2.0-dev libgmp3-dev \
-   libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libpython3-dev libreadline-dev \
-   libssl-dev libtool lrzsz mkisofs msmtp ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 \
-   python3-pyelftools python3-setuptools qemu-utils rsync scons squashfs-tools subversion swig texinfo \
-   uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
+sudo apt update -y
+sudo apt full-upgrade -y
+sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \
+bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \
+git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libfuse-dev libglib2.0-dev libgmp3-dev \
+libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libpython3-dev libreadline-dev \
+libssl-dev libtool lrzsz mkisofs msmtp ninja-build p7zip p7zip-full patch pkgconf python3 \
+python3-pyelftools python3-setuptools qemu-utils rsync scons squashfs-tools subversion swig texinfo \
+uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
 ```
 3. `git clone https://github.com/xiaoqingfengATGH/HomeLede.git HomeLede`命令下载好源代码，然后 `cd HomeLede` 进入目录
 
@@ -166,12 +165,13 @@ PS > git clone git@github.com:coolsnowwolf/lede.git <your_local_lede_path>
 
 链接：https://drive.google.com/open?id=1iUDsgh1y5qouP48V61aTsswi3IekscKk
 
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/xiaoqingfengATGH/HomeLede.svg)](https://starchart.cc/xiaoqingfengATGH/HomeLede)
+
 ## 交流
 * [电报群](https://t.me/t_homelede)
 * [QQ群1：1030484865](https://jq.qq.com/?_wv=1027&k=PtlQp9Z9)
 * [QQ群2：807741215](https://jq.qq.com/?_wv=1027&k=z9phzgtx)
 * [QQ群3：1001944162](https://jq.qq.com/?_wv=1027&k=gEADVcI5)
 
-## Stargazers over time
-
- ![star](doc/star.png)
