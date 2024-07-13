@@ -19,7 +19,6 @@ platform_do_upgrade() {
 	netgear,wax218|\
 	netgear,wax620|\
 	netgear,wax630|\
-	tplink,tl-er2260t|\
 	zte,mf269)
 		nand_do_upgrade "$1"
 		;;
