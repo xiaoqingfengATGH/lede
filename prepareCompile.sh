@@ -1,6 +1,7 @@
 #/bin/sh
 
 disablePkgsList="
+./feeds/packages/net/mosdns 
 ./feeds/packages/net/adguardhome 
 ./feeds/packages/net/dnscrypt-proxy2 
 ./feeds/packages/net/smartdns 
