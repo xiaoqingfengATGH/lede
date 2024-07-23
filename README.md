@@ -14,6 +14,7 @@
 [![Issue Welcome][5]][6]
 [![Release Version][7]][8]
 [![Contact Me][10]][11]
+![visits since 2024.07.23](https://views.whatilearened.today/views/github/xiaoqingfengATGH/deplives.svg)
 
 [固件使用说明](https://github.com/xiaoqingfengATGH/HomeLede/wiki)
 
