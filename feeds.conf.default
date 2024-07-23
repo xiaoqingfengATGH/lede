@@ -9,7 +9,7 @@ src-git xiaoqingfeng https://github.com/xiaoqingfengATGH/feeds-xiaoqingfeng
 src-git infinityfreedom https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git;classic
 # luci-theme-infinityfreedom-ng
 src-git infinityfreedomng https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git
-
+src-git lienolPkgs https://github.com/Lienol/openwrt-package
 # homeclash
 #src-git homeclash https://github.com/xiaoqingfengATGH/homeclash.git
 # strongswanInDocker
