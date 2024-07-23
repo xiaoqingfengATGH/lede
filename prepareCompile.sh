@@ -8,6 +8,7 @@ disablePkgsList="
 ./feeds/packages/net/pdnsd-alt 
 ./feeds/packages/net/microsocks 
 ./feeds/packages/net/dns2socks 
+./feeds/packages/net/softethervpn5 
 ./feeds/luci/applications/luci-app-sqm 
 ./feeds/luci/applications/luci-app-nft-qos 
 ./feeds/luci/applications/luci-app-kodexplorer 
