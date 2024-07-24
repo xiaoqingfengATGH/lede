@@ -16,7 +16,7 @@
 [![Contact Me][10]][11]
 ![visits since 2024.07.23](https://views.whatilearened.today/views/github/xiaoqingfengATGH/deplives.svg)
 
-[固件使用说明](https://github.com/xiaoqingfengATGH/HomeLede/wiki)
+[固件使用说明](https://github.com/xiaoqingfengATGH/HomeLede/wiki) [版本下载](https://github.com/xiaoqingfengATGH/HomeLede/wiki/HomeLede%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83)
 
 + 基于Lede OpenWrt，多款HomeLede原创软件及若干第三方软件包（Feed）
 + 结合家庭x86软路由场景需要定制
