@@ -15,7 +15,8 @@ src-git lienolPkgs https://github.com/Lienol/openwrt-package
 # strongswanInDocker
 #src-git strongswanInDocker https://github.com/xiaoqingfengATGH/luci-app-strongswanInDocker.git
 
-#src-git helloworld https://github.com/fw876/helloworld.git
+src-git tinyworld https://github.com/xiaoqingfengATGH/tinyWorld.git
+
 #src-git oui https://github.com/zhaojh329/oui.git
 
 #src-git video https://github.com/openwrt/video.git
