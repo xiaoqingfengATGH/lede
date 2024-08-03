@@ -11,7 +11,8 @@ src-git infinityfreedom https://github.com/xiaoqingfengATGH/luci-theme-infinityf
 src-git infinityfreedomng https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git
 src-git lienolPkgs https://github.com/Lienol/openwrt-package
 # homeclash
-#src-git homeclash https://github.com/xiaoqingfengATGH/homeclash.git
+src-git homeclash https://github.com/xiaoqingfengATGH/homeclash.git
+src-git pw1 https://github.com/xiaoqingfengATGH/feeds-lienol.git
 # strongswanInDocker
 #src-git strongswanInDocker https://github.com/xiaoqingfengATGH/luci-app-strongswanInDocker.git
 
